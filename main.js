@@ -18,6 +18,7 @@ function CheckForUpdate () {
     title: 'TSConnect',
     width: 300,
     height: 500,
+    icon: __dirname + '/public/img/icon.png',
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
