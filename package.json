@@ -10,7 +10,7 @@
     "pack": "electron-builder --mac",
     "dist": "electron-builder --mac --publish always",
     "publish": "./publish.sh",
-    "publish:win": "./publishWindows.sh"
+    "publish:win": "bash publishWindows.sh"
   },
   "repository": "https://github.com/TSConnect/TSConnect.git",
   "keywords": [],
