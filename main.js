@@ -3,7 +3,9 @@ const { app, BrowserWindow, Menu, globalShortcut } = require('electron')
 const { autoUpdater } = require('electron-updater');
 const path = require('node:path')
 const url = require('url');
+const log = require("electron-log")
 
+log.initialize()
 
 let mainWindow;
 
@@ -41,7 +43,7 @@ app.whenReady().then(() => {
     {
       label: 'TSConnect', 
       submenu: [
-        {label: 'Settings', click: console.log('file-new')},
+        {label: 'Settings', click: log.info('file-new')},
         {type: 'separator'},
         {accelerator: "Cmd+qOrControl+q", label: 'Quit', click: function() {app.quit();}}
       ]
@@ -49,7 +51,7 @@ app.whenReady().then(() => {
       label: 'App Control', 
       submenu: [
         {accelerator:"Cmd+hOrControl+h", label: 'Home', click: function () { 
-          console.log()
+          log.info()
           menuManager("Home")
         } },
         {type: 'separator'},
@@ -122,7 +124,7 @@ function menuManager(type) {
   if(mainWindow == undefined)return;
   type = type.toLowerCase()
   if(type == "home"){
-    console.log("hi")
+    log.info("hi")
     mainWindow.loadURL(url.format({
       pathname : path.join(__dirname,'public/index.html'),
       protocol:'file',
