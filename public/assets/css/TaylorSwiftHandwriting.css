@@ -1,0 +1,8 @@
+@font-face {
+	font-family: 'TaylorSwiftHandwriting';
+	src: url(../../assets/fonts/TaylorSwiftHandwriting-12bbb27ceed64e54690c09b215c11da8.woff2) format('woff2'),
+	url(../../assets/fonts/TaylorSwiftHandwriting-fd3b05b34926cdf854b2a4721ad6c4cd.woff) format('woff');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
