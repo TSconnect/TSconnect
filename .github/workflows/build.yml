@@ -24,6 +24,9 @@ jobs:
           node-version: 20
 
       - name: Build/release Electron app
+        env:
+          APPLEID: ${{ secrets.APPLE_ID }}
+          APPLEIDPASS: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
         uses: samuelmeuli/action-electron-builder@v1
         with:
           # GitHub token, automatically provided to the action
