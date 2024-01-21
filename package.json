@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start",
+  "name": "tsconnect",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -52,5 +52,8 @@
         }
       ]
     }
+  },
+  "dependencies": {
+    "electron-updater": "^6.1.7"
   }
 }
