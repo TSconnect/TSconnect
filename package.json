@@ -6,6 +6,7 @@
   "scripts": {
     "dist:windows": "electron-builder --win --publish always",
     "start": "electron .",
+    "test": "TSC_TESTING=true electron .",
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --mac",
     "dist": "electron-builder --mac --publish always",
