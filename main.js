@@ -96,7 +96,7 @@ autoUpdater.on('update-available', () => {
 
 autoUpdater.on('update-downloaded', () => {
   console.log("installing now")
-  autoUpdater.autoInstallOnAppQuit()
+  autoUpdater.quitAndInstall()
 });
 
 /**
