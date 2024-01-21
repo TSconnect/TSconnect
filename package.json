@@ -4,6 +4,7 @@
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
+    "dist:windows": "electron-builder --win --publish always",
     "start": "electron .",
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --mac",
@@ -16,7 +17,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^28.1.4",
-    "electron-builder": "^24.9.1"
+    "electron-builder": "^23.3.3"
   },
   "build": {
     "appId": "com.tsconnect.tsconnect",

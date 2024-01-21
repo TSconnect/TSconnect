@@ -3,3 +3,4 @@ build/
 dist/
 bootstrapStudio/
 publish.sh
+publishWindows.sh
