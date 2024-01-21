@@ -1,6 +1,6 @@
 {
   "name": "tsconnect",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "start": "electron .",
     "test": "TSC_TESTING=true electron .",
     "postinstall": "electron-builder install-app-deps",
-    "pack": "electron-builder --mac",
+    "pack": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac",
     "dist": "electron-builder --mac --publish always",
     "publish": "./publish.sh",
     "publish:win": "bash publishWindows.sh"
@@ -33,7 +33,8 @@
     },
     "mac": {
       "target": [
-        "dmg"
+        "dmg",
+        "zip"
       ]
     },
     "dmg": {

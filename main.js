@@ -72,7 +72,9 @@ app.whenReady().then(() => {
   log.info(`[App Version] ${app.getVersion()}`)
   log.info(`[Version Check] Checking for Updates`)
   log.info(process.env["TSC_TESTING"])
-  if(process.env["TSC_TESTING"] == "true"){
+
+  //change this once able to be signed
+  if(process.env["TSC_TESTING"] == "true" && process.platform == 'darwin'){
     loadApp()
   }else{
     CheckForUpdate()
