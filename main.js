@@ -38,8 +38,9 @@ function CheckForUpdate () {
 }
 
 function createWindow () {
-  if(!update && mainWindow != undefined){
+  if(!update && mainWindow != undefined && mainWindow != null){
     mainWindow.close()
+    mainWindow = null;
     update = true;
   }
   // Create the browser window.
@@ -79,6 +80,8 @@ app.whenReady().then(() => {
   //change this once able to be signed
   if(process.platform == 'darwin' || process.env["TSC_TESTING"] == "true"){
     log.info(`[AUTOUPDATE] Skipping autoupdater. PLATFORM: ${process.platform} | TSC_TESTING ENV: ${process.env["TSC_TESTING"] == undefined ? "Not Present" : process.env["TSC_TESTING"]}`)
+    // CheckForUpdate()
+
     loadApp()
   }else{
     CheckForUpdate()
@@ -170,7 +173,6 @@ function loadApp(){
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuItems))
   }
   log.info(`[INFO] Loading Main Window`)
-  mainWindow = null;
   createWindow()
 }
 
