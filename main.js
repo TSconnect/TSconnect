@@ -5,6 +5,7 @@ const path = require('node:path')
 const url = require('url');
 const log = require("electron-log")
 
+log.transports.file.level = 'info';
 log.initialize()
 let update = false;
 let mainWindow;
