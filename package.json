@@ -29,7 +29,7 @@
     },
     "productName": "TSConnect",
     "win": {
-      "icon": "build/assets/icon_1024x1024.ico"
+      "icon": "public/assets/img/icon_1024x1024.ico"
     },
     "mac": {
       "target": [
