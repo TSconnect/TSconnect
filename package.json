@@ -4,19 +4,53 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --mac",
+    "dist": "electron-builder --mac --publish always",
+    "publish": "./publish.sh"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
+  "repository": "https://github.com/TSConnect/TSConnect",
+  "keywords": [],
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^28.1.4"
+    "electron": "^28.1.4",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.tsconnect.tsconnect",
+    "icon": "build/assets/AppIcon.icns",
+    "directories": {
+      "output": "build"
+    },
+    "productName": "TSConnect",
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "identity": null
+    },
+    "dmg": {
+      "background": "build/assets/DMG_Background.tiff",
+      "icon": "build/assets/AppIcon.icns",
+      "iconSize": 100,
+      "window": {
+        "width": 544,
+        "height": 408
+      },
+      "contents": [
+        {
+          "x": 134,
+          "y": 223
+        },
+        {
+          "x": 410,
+          "y": 223,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
   }
 }
