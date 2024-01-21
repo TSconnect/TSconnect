@@ -23,7 +23,7 @@
   },
   "build": {
     "appId": "com.tsconnect.tsconnect",
-    "icon": "build/assets/AppIcon.icns",
+    "icon": "buildAssets/assets/AppIcon.icns",
     "directories": {
       "output": "build"
     },
@@ -38,8 +38,8 @@
       ]
     },
     "dmg": {
-      "background": "build/assets/DMG_Background.tiff",
-      "icon": "build/assets/AppIcon.icns",
+      "background": "buildAssets/assets/DMG_Background.tiff",
+      "icon": "buildAssets/assets/AppIcon.icns",
       "iconSize": 100,
       "window": {
         "width": 544,
