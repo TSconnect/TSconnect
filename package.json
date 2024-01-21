@@ -22,7 +22,7 @@
     "electron-builder": "^24.9.1"
   },
   "build": {
-    "appId": "com.tsconnect.tsconnect",
+    "appId": "com.tsconnectdev.tsconnect",
     "icon": "buildAssets/assets/AppIcon.icns",
     "directories": {
       "output": "build"
