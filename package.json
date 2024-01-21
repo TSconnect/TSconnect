@@ -10,7 +10,7 @@
     "dist": "electron-builder --mac --publish always",
     "publish": "./publish.sh"
   },
-  "repository": "https://github.com/TSConnect/TSConnect",
+  "repository": "https://github.com/TSConnect/TSConnect.git",
   "keywords": [],
   "author": "GitHub",
   "license": "CC0-1.0",
@@ -28,8 +28,7 @@
     "mac": {
       "target": [
         "dmg"
-      ],
-      "identity": null
+      ]
     },
     "dmg": {
       "background": "build/assets/DMG_Background.tiff",
