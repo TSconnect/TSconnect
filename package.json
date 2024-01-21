@@ -1,6 +1,6 @@
 {
   "name": "tsconnect",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
