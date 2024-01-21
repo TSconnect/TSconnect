@@ -9,10 +9,7 @@ log.initialize()
 
 let mainWindow;
 
-function sendStatusToWindow(text) {
-  log.info(text);
-  mainWindow.webContents.send('message', text);
-}
+
 
 
 function CheckForUpdate () {
@@ -69,12 +66,12 @@ app.whenReady().then(() => {
 
   log.info(`[App Version] ${app.getVersion()}`)
   log.info(`[Version Check] Checking for Updates`)
-  autoUpdater.checkForUpdatesAndNotify();
   if(process.env["TSC_TESTING"] == "true"){
     loadApp()
   }else{
     CheckForUpdate()
   }
+  autoUpdater.checkForUpdatesAndNotify();
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -171,4 +168,9 @@ function loadApp(){
 
   log.info(`[INFO] Loading Main Window`)
   createWindow()
+}
+
+function sendStatusToWindow(text) {
+  log.info(text);
+  mainWindow.webContents.send('message', text);
 }
