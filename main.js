@@ -139,39 +139,30 @@ function menuManager(type) {
 }
 
 function loadApp(){
-  log.info(`[INFO] Registering Menu Items and Shortcuts`)
-  let menuItems = [
-    {
-      label: 'TSConnect', 
-      submenu: [
-        {label: 'Debug', click: function () {
-          menuManager("Debug")
-        }},
-        {type: 'separator'},
-        {accelerator: "Cmd+qOrControl+q", label: 'Quit', click: function() {app.quit();}}
-      ]
-    },{
-      label: 'App Control', 
-      submenu: [
-        {accelerator:"Cmd+hOrControl+h", label: 'Home', click: function () { 
-          log.info()
-          menuManager("Home")
-        } },
-        {type: 'separator'},
-        {accelerator: "Cmd+qOrControl+q", label: 'Quit', click: function() {app.quit();}}
-      ]
-    },
-  ]
-  Menu.setApplicationMenu(Menu.buildFromTemplate(menuItems))
-
-  globalShortcut.register('Command+hOrControl+h', () => {
-    menuManager("Home")
-  })
-
-  globalShortcut.register('Command+qOrControl+q', () => {
-    app.quit()
-  })
-
+  if (process.platform == 'darwin'){
+    log.info(`[MACOS Only] Registering Menu Items and Shortcuts`)
+    let menuItems = [
+      {
+        label: 'TSConnect', 
+        submenu: [
+          {accelerator: "CommandOrControl+Shift+d", label: 'Debug', click: function () {
+            menuManager("Debug")
+          }},
+          {type: 'separator'},
+          {accelerator: "CommandOrControl+q", label: 'Quit', click: function() {app.quit();}}
+        ]
+      },{
+        label: 'App Control', 
+        submenu: [
+          {accelerator:"CommandOrControl+h", label: 'Home', click: function () { 
+            log.info()
+            menuManager("Home")
+          } }
+        ]
+      },
+    ]
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuItems))
+  }
   log.info(`[INFO] Loading Main Window`)
   createWindow()
 }
