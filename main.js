@@ -72,7 +72,10 @@ app.whenReady().then(() => {
   log.info(`[App Version] ${app.getVersion()}`)
   log.info(`[Version Check] Checking for Updates`)
   log.info(process.env["TSC_TESTING"])
-  if(process.env["TSC_TESTING"] == "true"){
+
+  //change this once able to be signed
+  if(process.platform == 'darwin' || process.env["TSC_TESTING"] == "true"){
+    log.info(`[AUTOUPDATE] Skipping autoupdater. PLATFORM: ${process.platform} | TSC_TESTING ENV: ${process.env["TSC_TESTING"] == undefined ? "Not Present" : process.env["TSC_TESTING"]}`)
     loadApp()
   }else{
     CheckForUpdate()
