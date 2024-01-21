@@ -6,7 +6,7 @@ const url = require('url');
 const log = require("electron-log")
 
 log.initialize()
-
+let update = false;
 let mainWindow;
 
 
@@ -30,12 +30,16 @@ function CheckForUpdate () {
   mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
   
   
 }
 
 function createWindow () {
+  if(!update){
+    mainWindow.close()
+    update = true;
+  }
   // Create the browser window.
   mainWindow = new BrowserWindow({
     title: 'TSConnect',
@@ -66,10 +70,13 @@ app.whenReady().then(() => {
 
   log.info(`[App Version] ${app.getVersion()}`)
   log.info(`[Version Check] Checking for Updates`)
-  if(process.env["TSC_TESTING"] == "true"){
+  if(process.env["TSC_TESTING"] != "true"){
     loadApp()
   }else{
     CheckForUpdate()
+
+    sendStatusToWindow('Update not available. Starting TSConnect.');
+    loadApp()
   }
   autoUpdater.checkForUpdatesAndNotify();
 

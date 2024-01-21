@@ -22,12 +22,19 @@ let version = window.location.hash.substring(1);
 document.getElementById('version').innerText = version;
 
 // Listen for messages
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, remote} = require('electron');
 ipcRenderer.on('message', function(event, text) {
   var container = document.getElementById('messages');
   var message = document.createElement('div');
-  message.innerHTML = text;
-  container.appendChild(message);
+  if(text == 'Update not available. Starting TSConnect.'){
+    message.innerHTML = text;
+    var window = remote.getCurrentWindow();
+    console.log(window)
+    window.close()
+  }else{
+    message.innerHTML = text;
+    container.appendChild(message);
+  }
 })
 </script>
 </body>
