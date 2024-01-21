@@ -36,7 +36,7 @@ function CheckForUpdate () {
 }
 
 function createWindow () {
-  if(!update){
+  if(!update && mainWindow != undefined){
     mainWindow.close()
     update = true;
   }
