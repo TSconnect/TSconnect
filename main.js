@@ -71,7 +71,9 @@ app.whenReady().then(() => {
 
   log.info(`[App Version] ${app.getVersion()}`)
   log.info(`[Version Check] Checking for Updates`)
-  log.info(process.env["TSC_TESTING"])
+  log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
+  log.info(`[PLATFORM] ${process.platform}`)
+  log.info(`[IS MAS] ${process.mas == undefined ? false : process.mas}`)
 
   //change this once able to be signed
   if(process.platform == 'darwin' || process.env["TSC_TESTING"] == "true"){
@@ -85,7 +87,7 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) loadApp()
   })
 
 })
@@ -167,6 +169,7 @@ function loadApp(){
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuItems))
   }
   log.info(`[INFO] Loading Main Window`)
+  mainWindow = null;
   createWindow()
 }
 
