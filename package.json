@@ -28,6 +28,7 @@
       "output": "build"
     },
     "productName": "TSConnect",
+    "afterSign": "buildAssets/afterSign.js",
     "win": {
       "icon": "public/assets/img/icon.ico"
     },
@@ -40,10 +41,7 @@
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.plist",
       "gatekeeperAssess": false,
-      "category": "public.app-category.utilities",
-      "notarize": {
-        "teamId": "GR73PRX6RX"
-      }
+      "category": "public.app-category.utilities"
     },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
