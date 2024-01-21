@@ -7,6 +7,11 @@ const url = require('url');
 
 let mainWindow;
 
+function sendStatusToWindow(text) {
+  log.info(text);
+  mainWindow.webContents.send('message', text);
+}
+
 
 function createWindow () {
   // Create the browser window.
@@ -22,11 +27,7 @@ function createWindow () {
 
 
   // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname : path.join(__dirname,'public/test.html'),
-    protocol:'file',
-    slashes:true
-  }))
+  mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -90,13 +91,26 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-autoUpdater.on('update-available', () => {
-  console.log("update available")
-});
-
-autoUpdater.on('update-downloaded', () => {
-  console.log("installing now")
-  autoUpdater.quitAndInstall()
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  sendStatusToWindow('Error in auto-updater. ' + err);
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  sendStatusToWindow(log_message);
+})
+autoUpdater.on('update-downloaded', (info) => {
+  sendStatusToWindow('Update downloaded');
 });
 
 /**
