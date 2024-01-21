@@ -8,10 +8,10 @@
     "start": "electron .",
     "test": "TSC_TESTING=true electron .",
     "postinstall": "electron-builder install-app-deps",
-    "pack": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac",
+    "pack": "electron-builder --mac",
     "dist": "electron-builder --mac --publish always",
-    "publish": "./publish.sh",
-    "publish:win": "bash publishWindows.sh"
+    "publish": "./buildAssets/publish.sh",
+    "publish:win": "bash buildAssets/publishWindows.sh"
   },
   "repository": "https://github.com/TSConnect/TSConnect.git",
   "keywords": [],
@@ -35,7 +35,12 @@
       "target": [
         "dmg",
         "zip"
-      ]
+      ],
+      "hardenedRuntime": true,
+      "entitlements": "buildAssets/entitlements.mac.plist",
+      "entitlementsInherit": "buildAssets/entitlements.mac.plist",
+      "gatekeeperAssess": false,
+      "category": "public.app-category.utilities"
     },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
@@ -60,6 +65,7 @@
     }
   },
   "dependencies": {
+    "@electron/osx-sign": "^1.0.5",
     "electron-log": "^5.0.3",
     "electron-updater": "^6.1.7"
   }
