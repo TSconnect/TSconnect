@@ -91,11 +91,12 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 autoUpdater.on('update-available', () => {
-  mainWindow.webContents.send('update_available');
+  console.log("update available")
 });
 
 autoUpdater.on('update-downloaded', () => {
-  mainWindow.webContents.send('update_downloaded');
+  console.log("installing now")
+  autoUpdater.autoInstallOnAppQuit()
 });
 
 /**
