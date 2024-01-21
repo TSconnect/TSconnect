@@ -5,3 +5,4 @@ bootstrapStudio/
 publish.sh
 publishWindows.sh
 .DS_Store
+buildAssets/certs
