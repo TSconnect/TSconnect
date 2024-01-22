@@ -75,7 +75,7 @@ app.whenReady().then(() => {
   log.info(`[Version Check] Checking for Updates`)
   log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
   log.info(`[PLATFORM] ${process.platform}`)
-  log.info(`[IS MAC APP STORE BUILD] ${process.mas == undefined ? false : process.mas}`)
+  log.info(`[IS MAC APP STORE] ${process.mas == undefined ? false : process.mas}`)
 
   //change this once able to be signed
   if(process.env["TSC_TESTING"] == "true"){
