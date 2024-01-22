@@ -1,6 +1,6 @@
 {
   "name": "tsconnect",
-  "version": "0.0.1-beta.7",
+  "version": "0.0.1-beta.8",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
@@ -20,12 +20,12 @@
   "devDependencies": {
     "electron": "^28.1.4",
     "electron-builder": "^24.9.1",
-    "electron-builder-notarize": "^1.5.1"
+    "tsconnect-notarize": "^1.0.0"
   },
   "build": {
     "appId": "com.tsconnect.tsconnect",
     "icon": "buildAssets/assets/AppIcon.icns",
-    "afterSign": "electron-builder-notarize",
+    "afterSign": "tsconnect-notarize",
     "directories": {
       "output": "build"
     },
