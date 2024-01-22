@@ -5,7 +5,7 @@ const path = require('node:path')
 const url = require('url');
 const log = require("electron-log")
 
-log.transports.file.level = 'info';
+log.transports.file.level = 'silly';
 log.initialize()
 let update = false;
 let mainWindow;
@@ -75,7 +75,7 @@ app.whenReady().then(() => {
   log.info(`[Version Check] Checking for Updates`)
   log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
   log.info(`[PLATFORM] ${process.platform}`)
-  log.info(`[IS MAC APP STORE] ${process.mas == undefined ? false : process.mas}`)
+  log.info(`[IS MAC APP STORE VERSION] ${process.mas == undefined ? false : process.mas}`)
 
   //change this once able to be signed
   if(process.env["TSC_TESTING"] == "true"){
