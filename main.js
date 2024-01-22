@@ -72,7 +72,7 @@ app.whenReady().then(() => {
   
 
   log.info(`[App Version] ${app.getVersion()}`)
-  log.info(`[Version Check] Checking for Updates`)
+  log.info(`[Version Check] Checking for Update`)
   log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
   log.info(`[PLATFORM] ${process.platform}`)
   log.info(`[IS MAS] ${process.mas == undefined ? false : process.mas}`)
