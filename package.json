@@ -28,14 +28,12 @@
       "output": "build"
     },
     "productName": "TSConnect",
-    "afterSign": "buildAssets/afterSign.js",
     "win": {
       "icon": "public/assets/img/icon.ico"
     },
     "mac": {
       "target": [
-        "dmg",
-        "zip"
+        "dmg"
       ],
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
@@ -66,9 +64,9 @@
     }
   },
   "dependencies": {
+    "@electron/notarize": "^2.2.0",
     "@electron/osx-sign": "^1.0.5",
     "electron-log": "^5.0.3",
-    "electron-notarize": "^1.2.2",
     "electron-updater": "^6.1.7"
   }
 }
