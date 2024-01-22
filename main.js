@@ -11,7 +11,7 @@ let update = false;
 let mainWindow;
 
 
-
+log.errorHandler.startCatching()
 
 function CheckForUpdate () {
   // Create the browser window.
@@ -108,10 +108,10 @@ app.on('window-all-closed', function () {
 
 autoUpdater.on('checking-for-update', () => {
   log.info("Checking for updates using the following feed: " + autoUpdater.getFeedURL())
-  sendStatusToWindow('Checking for update...');
+  sendStatusToWindow('102-Checking for update...');
 })
 autoUpdater.on('update-available', (info) => {
-  sendStatusToWindow('Update available.');
+  sendStatusToWindow('102-Update available.');
 })
 autoUpdater.on('update-not-available', (info) => {
   sendStatusToWindow('Update not available. Starting TSConnect.');
@@ -119,13 +119,10 @@ autoUpdater.on('update-not-available', (info) => {
   loadApp()
 })
 autoUpdater.on('error', (err) => {
-  sendStatusToWindow('Error in auto-updater. ' + err);
+  sendStatusToWindow('102-Error in auto-updater. ' + err);
 })
 autoUpdater.on('download-progress', (progressObj) => {
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-  sendStatusToWindow(log_message);
+  sendStatusToWindow(`101-${progressObj.percent}`);
 })
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
@@ -165,7 +162,7 @@ function loadApp(){
         label: 'App Control', 
         submenu: [
           {accelerator:"CommandOrControl+h", label: 'Home', click: function () { 
-            log.info()
+            log.info("Returning to Home")
             menuManager("Home")
           } }
         ]
