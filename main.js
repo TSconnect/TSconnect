@@ -5,6 +5,7 @@ const path = require('node:path')
 const url = require('url');
 const log = require("electron-log")
 
+log.transports.file.level = 'info';
 log.initialize()
 let update = false;
 let mainWindow;
@@ -37,8 +38,9 @@ function CheckForUpdate () {
 }
 
 function createWindow () {
-  if(!update && mainWindow != undefined){
+  if(!update && mainWindow != undefined && mainWindow != null){
     mainWindow.close()
+    mainWindow = null;
     update = true;
   }
   // Create the browser window.
@@ -76,8 +78,10 @@ app.whenReady().then(() => {
   log.info(`[IS MAS] ${process.mas == undefined ? false : process.mas}`)
 
   //change this once able to be signed
-  if(process.platform == 'darwin' || process.env["TSC_TESTING"] == "true"){
+  if(process.env["TSC_TESTING"] == "true"){
     log.info(`[AUTOUPDATE] Skipping autoupdater. PLATFORM: ${process.platform} | TSC_TESTING ENV: ${process.env["TSC_TESTING"] == undefined ? "Not Present" : process.env["TSC_TESTING"]}`)
+    // CheckForUpdate()
+
     loadApp()
   }else{
     CheckForUpdate()
@@ -125,6 +129,7 @@ autoUpdater.on('download-progress', (progressObj) => {
 })
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
+  autoUpdater.quitAndInstall()
 });
 
 /**
@@ -169,7 +174,6 @@ function loadApp(){
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuItems))
   }
   log.info(`[INFO] Loading Main Window`)
-  mainWindow = null;
   createWindow()
 }
 
