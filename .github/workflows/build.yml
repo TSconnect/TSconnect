@@ -46,7 +46,6 @@ jobs:
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
         env:
           # macOS notarization API key
-          PUBLISH_FOR_PULL_REQUEST: true
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
