@@ -1,9 +1,7 @@
 name: Build/release
 
 on: 
-  pull_request:
-    types:
-      - opened
+  push:
     branches:
       - 'stable'
 
