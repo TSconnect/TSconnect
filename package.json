@@ -35,7 +35,8 @@
     },
     "mac": {
       "target": [
-        "dmg"
+        "dmg",
+        "zip"
       ],
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
