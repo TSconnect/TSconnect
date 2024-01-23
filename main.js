@@ -1,9 +1,9 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, globalShortcut } = require('electron')
+const { app, BrowserWindow, Menu, globalShortcut, ipcMain } = require('electron')
 const { autoUpdater } = require('electron-updater');
 const path = require('node:path')
 const url = require('url');
-const log = require("electron-log")
+const log = require("electron-log");
 
 log.transports.file.level = 'silly';
 log.initialize()
@@ -27,6 +27,9 @@ function CheckForUpdate () {
     }
   })
 
+  if(process.platform != 'darwin') {
+    mainWindow.setMenu(null)
+  }
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
@@ -55,6 +58,9 @@ function createWindow () {
     }
   })
 
+  if(process.platform != 'darwin') {
+    mainWindow.setMenu(null)
+  }
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/public/index.html#v${app.getVersion()}`);
@@ -112,11 +118,6 @@ autoUpdater.on('checking-for-update', () => {
 })
 autoUpdater.on('update-available', (info) => {
   sendStatusToWindow('102-Update available.');
-})
-autoUpdater.on('update-not-available', (info) => {
-  sendStatusToWindow('Update not available. Starting TSConnect.');
-
-  loadApp()
 })
 autoUpdater.on('error', (err) => {
   sendStatusToWindow('102-Error in auto-updater. ' + err);
