@@ -125,6 +125,9 @@ autoUpdater.on('error', (err) => {
 autoUpdater.on('download-progress', (progressObj) => {
   sendStatusToWindow(`101-${progressObj.percent}`);
 })
+autoUpdater.on('update-not-available', (info) => {
+  loadApp()
+})
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
   autoUpdater.quitAndInstall()
