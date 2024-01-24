@@ -4,25 +4,22 @@ function toTimestamp(dateString) {
 const { contextBridge, ipcRenderer } = require("electron");
 
 window.onload = async () => {
+  let status = ["You play stupid games, you win stupid prizes", "RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
+
+  ipcRenderer.send("sendRPC", `Browsing ${document.title}`, status[Math.floor(Math.random() * status.length)])
 let days;
   if (document.getElementById("timezone") != undefined) {
     document.getElementById("timezone").innerText =
-      `Dashboard (All times are in ${new Date()
-        .toLocaleDateString(undefined, { day: "2-digit", timeZoneName: "long" })
-        .substring(4)
-        .match(/\b(\w)/g)
-        .join("")})`;
+      `Dashboard (All times are in your device's timezone unless specified)`;
   }
     
 if (document.getElementById("tourMonitorTimezone") != undefined) {
     document.getElementById("tourMonitorTimezone").innerText =
-      `Tour Monitor (All times are in ${new Date()
-        .toLocaleDateString(undefined, { day: "2-digit", timeZoneName: "long" })
-        .substring(4)
-        .match(/\b(\w)/g)
-        .join("")} unless specified)`;
+      `Tour Monitor (All times are in your device's timezone unless specified)`;
   }
 
+
+  // edit this to not update at the start of concert
   if (document.getElementById("nextTourDate") != undefined) {
     let config = {
       method: "get",
@@ -39,14 +36,16 @@ if (document.getElementById("tourMonitorTimezone") != undefined) {
 
     let dates = [];
     for (i in tourdate) {
-      dates.push(toTimestamp(tourdate[i].time));
+      dates.push(new Date(toTimestamp(tourdate[i].time).getTime() + (8 * 60 * 60 * 1000)));
     }
     let nearest = nearestDate(dates);
     console.log(nearest, tourdate[nearest])
      days = tourdate[nearest]
     let time = toTimestamp(tourdate[nearest]["time"]);
     document.getElementById("nextTourDate").innerText =
-      `${time.toLocaleDateString()} ${time.toLocaleTimeString()}`;
+      `${time.toDateString()} ${time.toLocaleTimeString()}`;
+    document.getElementById("nextTourDateLocal").innerText =
+      `${time.toDateString()} 4:00:00pm`;
     document.getElementById("tourLocation").innerText =
       `${tourdate[nearest].location}`;
   } 
@@ -86,6 +85,40 @@ if (document.getElementById("livestreams") != undefined) {
         `<a href="#" onclick="openLink('${date[i]["url"]}')">${date[i]["name"]}</a><br />`;
     }
   }
+    
+    
+    //countdown
+    
+if(document.getElementById("countdown") != undefined){
+    // Set the date we're counting down to
+var countDownDate = new Date(days['time']).getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s";
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("countdown").innerHTML = "DOORS ARE OPEN";
+  }
+}, 1000);
+}
 };
 
 function formatDMY(d) {

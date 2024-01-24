@@ -1,6 +1,6 @@
 {
   "name": "tsconnect",
-  "version": "0.0.1-beta.5",
+  "version": "0.0.1-beta.6",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
@@ -69,6 +69,7 @@
   "dependencies": {
     "@electron/notarize": "^2.2.0",
     "@electron/osx-sign": "^1.0.5",
+    "discord-rpc-electron": "^4.0.1",
     "electron-log": "^5.0.3",
     "electron-updater": "^6.1.7"
   }
