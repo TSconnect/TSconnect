@@ -36,7 +36,7 @@ if (document.getElementById("tourMonitorTimezone") != undefined) {
 
     let dates = [];
     for (i in tourdate) {
-      dates.push(toTimestamp(tourdate[i].time));
+      dates.push(new Date(toTimestamp(tourdate[i].time).getTime() + (8 * 60 * 60 * 1000)));
     }
     let nearest = nearestDate(dates);
     console.log(nearest, tourdate[nearest])
