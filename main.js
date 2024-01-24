@@ -40,6 +40,11 @@ async function setActivity(details, state) {
 rpc.on('ready', () => {
   log.info("[DISCORD RPC] Ready")
 
+  let status = ["You play stupid games, you win stupid prizes", "RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
+
+  let indet = "Browsing Dashboard";
+  let insta = status[Math.floor(Math.random() * status.length)];
+  setActivity(indet, insta)
 });
 
 rpc.login({ clientId }).catch(console.error);
@@ -142,6 +147,9 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
+
+let status = ["You play stupid games, you win stupid prizes", "RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
+
 let det;
 let sta;
 
@@ -149,7 +157,6 @@ ipcMain.on("sendRPC", (event, details, state) => {
   det = details;
   sta = state
 })
-
 setInterval(() => {
   setActivity(det, sta)
 }, 15000)
