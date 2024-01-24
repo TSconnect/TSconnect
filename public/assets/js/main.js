@@ -7,20 +7,12 @@ window.onload = async () => {
 let days;
   if (document.getElementById("timezone") != undefined) {
     document.getElementById("timezone").innerText =
-      `Dashboard (All times are in ${new Date()
-        .toLocaleDateString(undefined, { day: "2-digit", timeZoneName: "long" })
-        .substring(4)
-        .match(/\b(\w)/g)
-        .join("")})`;
+      `Dashboard (All times are in your device's timezone unless specified)`;
   }
     
 if (document.getElementById("tourMonitorTimezone") != undefined) {
     document.getElementById("tourMonitorTimezone").innerText =
-      `Tour Monitor (All times are in ${new Date()
-        .toLocaleDateString(undefined, { day: "2-digit", timeZoneName: "long" })
-        .substring(4)
-        .match(/\b(\w)/g)
-        .join("")} unless specified)`;
+      `Tour Monitor (All times are in your device's timezone unless specified)`;
   }
 
   if (document.getElementById("nextTourDate") != undefined) {
