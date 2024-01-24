@@ -18,6 +18,8 @@ if (document.getElementById("tourMonitorTimezone") != undefined) {
       `Tour Monitor (All times are in your device's timezone unless specified)`;
   }
 
+
+  // edit this to not update at the start of concert
   if (document.getElementById("nextTourDate") != undefined) {
     let config = {
       method: "get",
