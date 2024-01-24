@@ -4,6 +4,9 @@ function toTimestamp(dateString) {
 const { contextBridge, ipcRenderer } = require("electron");
 
 window.onload = async () => {
+  let status = ["RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
+
+  ipcRenderer.send("sendRPC", `Browsing ${document.title}`, status[Math.floor(Math.random() * status.length)])
 let days;
   if (document.getElementById("timezone") != undefined) {
     document.getElementById("timezone").innerText =

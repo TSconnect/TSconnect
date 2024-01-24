@@ -4,12 +4,45 @@ const { autoUpdater } = require('electron-updater');
 const path = require('node:path')
 const url = require('url');
 const log = require("electron-log");
+const DiscordRPC = require('discord-rpc-electron');
 
 log.transports.file.level = 'silly';
 log.initialize()
 let update = false;
 let mainWindow;
 
+// Set this to your Client ID.
+const clientId = '1199765277903175790';
+
+// Only needed if you want to use spectate, join, or ask to join
+DiscordRPC.register(clientId);
+
+const rpc = new DiscordRPC.Client({ transport: 'ipc' });
+const startTimestamp = new Date();
+
+async function setActivity(details, state) {
+  if (!rpc || !mainWindow) {
+    return;
+  }
+
+  // You'll need to have snek_large and snek_small assets uploaded to
+  // https://discord.com/developers/applications/<application_id>/rich-presence/assets
+  rpc.setActivity({
+    details: details,
+    state: state,
+    startTimestamp,
+    largeImageKey: 'icon_big',
+    largeImageText: 'TSConnect',
+    instance: false,
+  });
+}
+
+rpc.on('ready', () => {
+  log.info("[DISCORD RPC] Ready")
+
+});
+
+rpc.login({ clientId }).catch(console.error);
 
 log.errorHandler.startCatching()
 
@@ -108,6 +141,18 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
+let det;
+let sta;
+
+ipcMain.on("sendRPC", (event, details, state) => {
+  det = details;
+  sta = state
+})
+
+setInterval(() => {
+  setActivity(det, sta)
+}, 15000)
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
