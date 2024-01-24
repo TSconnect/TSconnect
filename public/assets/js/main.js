@@ -44,7 +44,7 @@ if (document.getElementById("tourMonitorTimezone") != undefined) {
     let time = toTimestamp(tourdate[nearest]["time"]);
     document.getElementById("nextTourDate").innerText =
       `${time.toDateString()} ${time.toLocaleTimeString()}`;
-    document.getElementById("nextTourDateLocal").innerText =
+      if(document.getElementById("nextTourDateLocal") != undefined) document.getElementById("nextTourDateLocal").innerText =
       `${time.toDateString()} 4:00:00pm`;
     document.getElementById("tourLocation").innerText =
       `${tourdate[nearest].location}`;
