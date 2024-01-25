@@ -4,22 +4,17 @@ function toTimestamp(dateString) {
 const { contextBridge, ipcRenderer } = require("electron");
 
 window.onload = async () => {
+  // Discord RPC
   let status = ["You play stupid games, you win stupid prizes", "RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
 
   ipcRenderer.send("sendRPC", `Browsing ${document.title}`, status[Math.floor(Math.random() * status.length)])
-let days;
-  if (document.getElementById("timezone") != undefined) {
-    document.getElementById("timezone").innerText =
-      `Dashboard (All times are in your device's timezone unless specified)`;
-  }
-    
-if (document.getElementById("tourMonitorTimezone") != undefined) {
-    document.getElementById("tourMonitorTimezone").innerText =
-      `Tour Monitor (All times are in your device's timezone unless specified)`;
-  }
+
+  // Setup variables and update static messages
+  let days;
 
 
-  // edit this to not update at the start of concert
+  // if the page needs nextTourDate
+  // Required for livestreams function
   if (document.getElementById("nextTourDate") != undefined) {
     let config = {
       method: "get",
@@ -42,15 +37,15 @@ if (document.getElementById("tourMonitorTimezone") != undefined) {
     console.log(nearest, tourdate[nearest])
      days = tourdate[nearest]
     let time = toTimestamp(tourdate[nearest]["time"]);
-    document.getElementById("nextTourDate").innerText =
+    if(document.getElementById("nextTourDate"))document.getElementById("nextTourDate").innerText =
       `${time.toDateString()} ${time.toLocaleTimeString()}`;
-    document.getElementById("nextTourDateLocal").innerText =
+    if(document.getElementById("nextTourDateLocal"))document.getElementById("nextTourDateLocal").innerText =
       `${time.toDateString()} 4:00:00pm`;
-    document.getElementById("tourLocation").innerText =
+    if(document.getElementById("tourLocation"))document.getElementById("tourLocation").innerText =
       `${tourdate[nearest].location}`;
   } 
     
-// needs the tour info to execute before this will work
+// Get the livestreams for the date
 if (document.getElementById("livestreams") != undefined) {
     let config = {
       method: "get",

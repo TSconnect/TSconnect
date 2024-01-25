@@ -35,8 +35,7 @@
     },
     "mac": {
       "target": [
-        "dmg",
-        "zip"
+        "mas"
       ],
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
@@ -44,6 +43,14 @@
       "gatekeeperAssess": false,
       "category": "public.app-category.utilities",
       "provisioningProfile": "buildAssets/certs/TSConnectDist.provisionprofile"
+    },
+    "mas": {
+        "hardenedRuntime": false,
+        "provisioningProfile": "buildAssets/certs/TSConnectDist.provisionprofile",
+        "entitlements": "buildAssets/entitlements.mac.plist",
+        "entitlementsInherit": "build/entitlements.mac.plist",
+        "gatekeeperAssess": false,
+        "asarUnpack": []
     },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
