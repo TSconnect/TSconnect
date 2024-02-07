@@ -42,7 +42,10 @@
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.plist",
       "gatekeeperAssess": false,
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "extendInfo": {
+        "ElectronTeamID": "GR73PRX6RX"
+      }
     },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
