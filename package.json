@@ -1,6 +1,6 @@
 {
   "name": "tsconnect",
-  "version": "0.0.1-beta.6",
+  "version": "0.0.1-beta.7",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
@@ -35,7 +35,8 @@
     },
     "mac": {
       "target": [
-        "mas"
+        "dmg",
+        "zip"
       ],
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
@@ -43,14 +44,6 @@
       "gatekeeperAssess": false,
       "category": "public.app-category.utilities",
       "provisioningProfile": "buildAssets/certs/TSConnectDist.provisionprofile"
-    },
-    "mas": {
-        "hardenedRuntime": false,
-        "provisioningProfile": "buildAssets/certs/TSConnectDist.provisionprofile",
-        "entitlements": "buildAssets/entitlements.mac.plist",
-        "entitlementsInherit": "build/entitlements.mac.plist",
-        "gatekeeperAssess": false,
-        "asarUnpack": []
     },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
