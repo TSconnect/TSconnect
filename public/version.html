@@ -25,15 +25,10 @@ document.getElementById('version').innerText = version;
 const {ipcRenderer, remote} = require('electron');
 ipcRenderer.on('message', function(event, text) {
   var container = document.getElementById('messages');
-  var message = document.createElement('div');
   if(text == 'Update not available. Starting TSConnect.'){
-    message.innerHTML = text;
-    var window = remote.getCurrentWindow();
-    console.log(window)
-    window.close()
+    container.innerHTML = text;
   }else{
-    message.innerHTML = text;
-    container.appendChild(message);
+    container.innerHTML = text;
   }
 })
 </script>
