@@ -42,8 +42,7 @@
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.plist",
       "gatekeeperAssess": false,
-      "category": "public.app-category.utilities",
-      "provisioningProfile": "buildAssets/certs/TSConnectDist.provisionprofile"
+      "category": "public.app-category.utilities"
     },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
