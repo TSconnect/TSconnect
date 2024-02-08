@@ -1,6 +1,6 @@
 {
   "name": "tsconnect",
-  "version": "0.0.1-beta.7",
+  "version": "0.0.1-beta.8",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "repository": "https://github.com/TSConnect/TSConnect.git",
   "keywords": [],
-  "author": "TSConnectStudio",
+  "author": "TSConnect",
   "license": "GPL-3.0-only",
   "devDependencies": {
     "electron": "^28.1.4",
