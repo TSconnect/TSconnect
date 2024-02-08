@@ -15,7 +15,7 @@
   },
   "repository": "https://github.com/TSConnect/TSConnect.git",
   "keywords": [],
-  "author": "TSConnect",
+  "author": "TSConnectStudio",
   "license": "GPL-3.0-only",
   "devDependencies": {
     "electron": "^28.1.4",
