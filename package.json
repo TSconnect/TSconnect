@@ -1,6 +1,6 @@
 {
   "name": "tsconnect",
-  "version": "0.0.1-beta.9",
+  "version": "0.1.0",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
@@ -10,7 +10,9 @@
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --mac",
     "dist": "electron-builder --mac --publish always",
-    "publish": "./buildAssets/publish.sh",
+    "publish:distDmg": "./buildAssets/publishDmg.sh",
+    "publish:dev": "./buildAssets/publishDev.sh",
+    "publish:dist": "./buildAssets/publishDist.sh",
     "publish:win": "bash buildAssets/publishWindows.sh"
   },
   "repository": "https://github.com/TSConnect/TSConnect.git",
@@ -26,6 +28,7 @@
     "appId": "com.tsconnect.tsconnect",
     "icon": "buildAssets/assets/AppIcon.icns",
     "afterSign": "tsconnect-notarize",
+    "buildVersion": "021024a",
     "directories": {
       "output": "build"
     },
@@ -35,18 +38,26 @@
     },
     "mac": {
       "target": [
-        "dmg",
-        "zip"
+        "mas"
       ],
+      "category": "public.app-category.utilities",
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
-      "entitlementsInherit": "buildAssets/entitlements.mac.plist",
+      "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
+      "provisioningProfile": "buildAssets/certs/TSConnect.provisionprofile",
       "gatekeeperAssess": false,
-      "category": "public.app-category.utilities",
+      "asarUnpack": [],
       "extendInfo": {
-        "ElectronTeamID": "GR73PRX6RX"
+        "ElectronTeamID": "GR73PRX6RX",
+        "LSMinimumSystemVersion": "12.0.0"
       }
     },
+    "mas": {
+       "type": "distribution",
+       "entitlements": "buildAssets/entitlements.mas.plist",
+       "entitlementsInherit": "buildAssets/entitlements.mas.inherit.plist",
+       "entitlementsLoginHelper": "buildAssets/entitlements.mas.loginhelper.plist"
+     },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
       "icon": "buildAssets/assets/AppIcon.icns",
