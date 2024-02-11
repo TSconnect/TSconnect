@@ -79,6 +79,7 @@ function CheckForUpdate () {
 }
 
 function createWindow () {
+  // If mainwindow somehow is undefined, create a new window and load the main index file
   if(mainWindow == undefined){
   // Create the browser window.
     mainWindow = new BrowserWindow({
@@ -93,20 +94,26 @@ function createWindow () {
     })
 
     mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+
+    // window exists, and is actually hidden, then show the window.
   }else{
-    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+    if(!mainWindow.isVisible()){
+      mainWindow.show();
+    }
   }
 
   if(process.platform != 'darwin') {
     mainWindow.setMenu(null)
   }
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/public/index.html#v${app.getVersion()}`);
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
   
+  mainWindow.on('close', (e) => {
+    if (mainWindow.forceClose) return;
+    e.preventDefault();
+    mainWindow.hide();
+  });
   
 }
 
