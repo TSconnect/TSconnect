@@ -61,8 +61,7 @@ function CheckForUpdate () {
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-      preload: path.join(__dirname, './public/assets/js/main.js')
+      contextIsolation: false
     }
   })
 
@@ -80,22 +79,23 @@ function CheckForUpdate () {
 }
 
 function createWindow () {
-  if(!update && mainWindow != undefined && mainWindow != null){
-    mainWindow.close()
-    mainWindow = null;
-    update = true;
-  }
+  if(mainWindow == undefined){
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    title: 'TSConnect',
-    width: 950,
-    height: 700,
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-    }
-  })
+    mainWindow = new BrowserWindow({
+      title: 'TSConnect',
+      width: 950,
+      height: 700,
+      resizable: false,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      }
+    })
+
+    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+  }else{
+    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+  }
 
   if(process.platform != 'darwin') {
     mainWindow.setMenu(null)
@@ -139,7 +139,10 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) loadApp()
+    if (BrowserWindow.getAllWindows().length === 0){
+      mainWindow = undefined;
+      loadApp();
+    }
   })
 
 })
@@ -160,7 +163,9 @@ ipcMain.on("sendRPC", (event, details, state) => {
   sta = state
 })
 setInterval(() => {
-  setActivity(det, sta)
+  if(mainWindow != undefined){
+    setActivity(det, sta)
+  }
 }, 15000)
 
 // In this file you can include the rest of your app's specific main process
@@ -200,6 +205,10 @@ function menuManager(type) {
   }else if(type == "debug"){
     log.info("[Debug] Opening Developer Tools.")
     mainWindow.webContents.openDevTools();
+  }else if(type == "action monitor"){
+    mainWindow.loadURL(`file://${__dirname}/public/actionMonitor.html`);
+  }else if(type == "about us"){
+    mainWindow.loadURL(`file://${__dirname}/public/aboutus.html`);
   }
 }
 
@@ -214,17 +223,31 @@ function loadApp(){
             menuManager("Debug")
           }},
           {type: 'separator'},
-          {accelerator: "CommandOrControl+q", label: 'Quit', click: function() {app.quit();}}
+          {accelerator: "CommandOrControl+q", label: 'Quit', click: function() {app.quit();}},
+          {accelerator: "CommandOrControl+w", label: 'Close Window', click: function() {
+            if(mainWindow != undefined){
+              mainWindow.close()
+              mainWindow = undefined;
+            }
+          }}
         ]
       },{
         label: 'App Control', 
         submenu: [
-          {accelerator:"CommandOrControl+h", label: 'Home', click: function () { 
-            log.info("Returning to Home")
+          {accelerator:"Alt+CommandOrControl+h", label: 'Home', click: function () { 
+            log.info("[SHORTCUT TRIGGERED] Navigating to Home")
             menuManager("Home")
+          } },
+          {accelerator:"Alt+CommandOrControl+m", label: 'Action Monitor', click: function () { 
+            log.info("[SHORTCUT TRIGGERED] Navigating to Action Monitor")
+            menuManager("Action Monitor")
+          } },
+          {accelerator:"Alt+CommandOrControl+a", label: 'About Us', click: function () { 
+            log.info("[SHORTCUT TRIGGERED] Navigating to About Us")
+            menuManager("About Us")
           } }
         ]
-      },
+      }
     ]
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuItems))
   }
