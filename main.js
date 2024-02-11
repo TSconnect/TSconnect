@@ -6,7 +6,7 @@ const url = require('url');
 const log = require("electron-log");
 const DiscordRPC = require('discord-rpc-electron');
 
-log.transports.file.level = 'silly';
+log.transports.file.level = 'info';
 log.initialize()
 let update = false;
 let mainWindow;
@@ -113,13 +113,9 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  
-
   log.info(`[App Version] ${app.getVersion()}`)
-  log.info(`[Version Check] Checking for Updates`)
   log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
   log.info(`[PLATFORM] ${process.platform}`)
-  log.info(`[IS MAC APP STORE VERSION] ${process.mas == undefined ? false : process.mas}`)
 
   //change this once able to be signed
   if(process.env["TSC_TESTING"] == "true"){
@@ -128,7 +124,14 @@ app.whenReady().then(() => {
 
     loadApp()
   }else{
-    CheckForUpdate()
+    if(process.mas == true){
+      log.info(`[MAS BUILD] Skipping AutoUpdate`)
+      loadApp()
+    }else{
+      log.info(`[Version Check] Checking for Updates`)
+      CheckForUpdate()
+    }
+    
   }
   autoUpdater.checkForUpdatesAndNotify();
 

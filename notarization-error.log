@@ -1,0 +1,87 @@
+Failed to staple your application with code: 65
+
+Processing: /Users/jerryzhang/MainFolder/Development/TSConnect/build/mac-arm64/TSConnect.app
+Properties are {
+    NSURLIsDirectoryKey = 1;
+    NSURLIsPackageKey = 1;
+    NSURLIsSymbolicLinkKey = 0;
+    NSURLLocalizedTypeDescriptionKey = Application;
+    NSURLTypeIdentifierKey = "com.apple.application-bundle";
+    "_NSURLIsApplicationKey" = 1;
+}
+Props are {
+    cdhash = {length = 20, bytes = 0x97bebc96b6e799a90cebcb1c38a1a4cd0f4f6bc6};
+    digestAlgorithm = 2;
+    flags = 0;
+    secureTimestamp = "2024-02-10 21:06:37 +0000";
+    signingId = "com.tsconnect.tsconnect";
+    teamId = GR73PRX6RX;
+}
+JSON Data is {
+    records =     (
+                {
+            recordName = "2/2/97bebc96b6e799a90cebcb1c38a1a4cd0f4f6bc6";
+        }
+    );
+}
+ Headers: {
+    "Content-Type" = "application/json";
+}
+Domain is api.apple-cloudkit.com
+Response is <NSHTTPURLResponse: 0x6000010ce960> { URL: https://api.apple-cloudkit.com/database/1/com.apple.gk.ticket-delivery/production/public/records/lookup } { Status Code: 200, Headers {
+    Connection =     (
+        "keep-alive"
+    );
+    "Content-Encoding" =     (
+        gzip
+    );
+    "Content-Type" =     (
+        "application/json; charset=UTF-8"
+    );
+    Date =     (
+        "Sat, 10 Feb 2024 21:08:02 GMT"
+    );
+    Server =     (
+        "AppleHttpServer/78689afb4479"
+    );
+    "Strict-Transport-Security" =     (
+        "max-age=31536000; includeSubDomains;"
+    );
+    "Transfer-Encoding" =     (
+        Identity
+    );
+    Via =     (
+        "xrail:st53p00ic-qujn12063402.me.com:8301:23R755:grp60,631194250daa17e24277dea86cf30319:0eeb37dfa9bb79fa442bff6bbf19346a:uslax2"
+    );
+    "X-Apple-CloudKit-Version" =     (
+        "1.0"
+    );
+    "X-Apple-Edge-Response-Time" =     (
+        63
+    );
+    "X-Apple-Request-UUID" =     (
+        "ce43b371-ccc4-45a0-8e4c-ef226ed113ca"
+    );
+    "X-Responding-Instance" =     (
+        "ckdatabasews:16308901:st42p63ic-ztfb18201501:8807:2408B382:f0997086feab84bddcc2f82b50817a88281c55f5"
+    );
+    "access-control-expose-headers" =     (
+        "X-Apple-Request-UUID,X-Responding-Instance,Via"
+    );
+    "x-apple-user-partition" =     (
+        63
+    );
+} }
+Size of data is 165
+JSON Response is: {
+    records =     (
+                {
+            reason = "Record not found";
+            recordName = "2/2/97bebc96b6e799a90cebcb1c38a1a4cd0f4f6bc6";
+            serverErrorCode = "NOT_FOUND";
+        }
+    );
+}
+CloudKit query for TSConnect.app (2/97bebc96b6e799a90cebcb1c38a1a4cd0f4f6bc6) failed due to "Record not found".
+Could not find base64 encoded ticket in response for 2/97bebc96b6e799a90cebcb1c38a1a4cd0f4f6bc6
+The staple and validate action failed! Error 65.

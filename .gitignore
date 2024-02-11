@@ -6,3 +6,5 @@ publish.sh
 publishWindows.sh
 .DS_Store
 buildAssets/certs
+private_keys/
+buildAssets/

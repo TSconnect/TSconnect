@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Tour Monitor</title>
+    <title>About Us</title>
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/icon_16x16.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/icon_16x16.png" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_32x32.png">
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="assets/css/iframe.css">
     <link rel="stylesheet" href="assets/css/Social-Icon-Circle.css">
 </head>
@@ -25,11 +26,11 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="tourMonitor.html"><i class="far fa-stop-circle"></i><span>Tour Monitor</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="tourMonitor.html"><i class="far fa-stop-circle"></i><span>Tour Monitor</span></a></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" href="aboutus.html"><i class="far fa-heart"></i><span>About US</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="aboutus.html"><i class="far fa-heart"></i><span>About US</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -44,52 +45,9 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4" id="tourMonitorTimezone">Tour Monitor (All times are in your device's timezone unless specified)</h3>
-                    <div class="row mb-3">
-                        <div class="col-lg-4">
-                            <div class="card mb-3">
-                                <div class="card-body text-center shadow">
-                                    <h1 class="text-dark">Live Streams</h1>
-                                    <p>TSConnect uses 4pm local time as the start of the concert and 12 am local time the next day as the end of the concert.</p>
-                                    <p id="livestreams">Live streams for the next stop will start appearing at:&nbsp;</p>
-                                    <p class="text-dark" style="font-weight: bold;">Next Stop's Information</p>
-                                    <p id="tourLocation">Tour Location</p>
-                                    <p id="nextTourDate">Tour Date</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="row mb-3 d-none">
-                                <div class="col">
-                                    <div class="card text-white bg-primary shadow">
-                                        <div class="card-body">
-                                            <div class="row mb-2">
-                                                <div class="col">
-                                                    <p class="m-0">Peformance</p>
-                                                    <p class="m-0"><strong>65.2%</strong></p>
-                                                </div>
-                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                                            </div>
-                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card text-white bg-success shadow">
-                                        <div class="card-body">
-                                            <div class="row mb-2">
-                                                <div class="col">
-                                                    <p class="m-0">Peformance</p>
-                                                    <p class="m-0"><strong>65.2%</strong></p>
-                                                </div>
-                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                                            </div>
-                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="text-center mt-5">
+                        <h1>About Us</h1>
+                        <p class="text-black-50 mb-0">TSConnect is the command center to everything Taylor Swift! TSConnect was built with love by just one swiftie, going by the name of SuburbanApple. His mission in this app is to help computer users that are interested in Taylor Swift to have an app where they can get all necessary information about her, for free. Please use the following social media bar to join our beloved community and to chat with SuburbanApple!</p><a class="btn btn-link btn-circle" role="button" style="border-radius: 50px;border: 1px solid black;background-color: #002649;margin: 5px;width: 40px;height: 40px;" onclick="openLink(&quot;https://www.instagram.com/tsconnect.app/&quot;)"><i class="icon ion-social-instagram-outline" style="color: #ffffff;font-size: 30px;"></i></a><button class="btn btn-link btn-circle" style="border-radius: 50px;border: 1px solid black;background-color: #002649;margin: 5px;width: 40px;height: 40px;" type="button" onclick="openLink(&quot;https://twitter.com/tsconnect_app&quot;)"><i class="icon ion-social-twitter" style="color: #ffffff;font-size: 30px;"></i></button><button class="btn btn-link btn-circle" style="border-radius: 50px;border: 1px solid black;background-color: #002649;margin: 5px;width: 40px;height: 40px;" type="button" onclick="openLink(&quot;https://tsconnect.github.io&quot;)"><i class="icon ion-android-globe" style="color: #ffffff;font-size: 30px;"></i></button>
                     </div>
                 </div>
             </div>
