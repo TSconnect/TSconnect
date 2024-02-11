@@ -1,6 +1,6 @@
 {
   "name": "tsconnect",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
@@ -40,7 +40,7 @@
         "mas"
       ],
       "category": "public.app-category.utilities",
-      "bundleVersion": "24.0210.2",
+      "bundleVersion": "24.0210.1",
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
