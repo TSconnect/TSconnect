@@ -8,3 +8,4 @@ publishWindows.sh
 buildAssets/certs
 private_keys/
 buildAssets/
+.DS_Store
