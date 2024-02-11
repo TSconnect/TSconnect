@@ -5,19 +5,6 @@ const { ipcRenderer } = require("electron");
 
 // when the window loads
 window.onload = async () => {
-  // send message to console for those debugging
-  console.log("")
-  console.log(`
-Welcome to the debug console!
-
-Only renderer side logs will appear here, backend logs will be logged in your machine's log folder. 
-
-To find the backend logs, please use the guide below:
-MacOS: ~/Library/Logs/TSConnect/main.log
-Windows: %USERPROFILE%\\AppData\\Roaming\\TSConnect\\logs\\main.log
-  `)
-  console.log("")
-
   // set the document title, needed to execute specific actions
   var title = document.title;
 
