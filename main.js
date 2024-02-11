@@ -51,6 +51,64 @@ rpc.login({ clientId }).catch(console.error);
 
 log.errorHandler.startCatching()
 
+function CheckForUpdate () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow({
+    title: 'TSConnect',
+    width: 300,
+    height: 500,
+    icon: __dirname + '/public/img/icon.png',
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  })
+
+  if(process.platform != 'darwin') {
+    mainWindow.setMenu(null)
+  }
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
+
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools()
+  
+  
+}
+
+function createWindow () {
+  if(mainWindow == undefined){
+  // Create the browser window.
+    mainWindow = new BrowserWindow({
+      title: 'TSConnect',
+      width: 950,
+      height: 700,
+      resizable: false,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      }
+    })
+
+    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+  }else{
+    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+  }
+
+  if(process.platform != 'darwin') {
+    mainWindow.setMenu(null)
+  }
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(`file://${__dirname}/public/index.html#v${app.getVersion()}`);
+
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools()
+  
+  
+}
 
 
 // set before quit
@@ -109,6 +167,10 @@ app.whenReady().then(async () => {
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
+    if (BrowserWindow.getAllWindows().length === 0){
+      mainWindow = undefined;
+      loadApp();
+    }
     if (BrowserWindow.getAllWindows().length === 0){
       createWindow();
     }else{
