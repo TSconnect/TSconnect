@@ -79,6 +79,7 @@ function CheckForUpdate () {
 }
 
 function createWindow () {
+  // If mainwindow somehow is undefined, create a new window and load the main index file
   if(mainWindow == undefined){
   // Create the browser window.
     mainWindow = new BrowserWindow({
@@ -93,22 +94,32 @@ function createWindow () {
     })
 
     mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+
+    // window exists, and is actually hidden, then show the window.
   }else{
-    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+    if(!mainWindow.isVisible()){
+      mainWindow.show();
+    }
   }
 
   if(process.platform != 'darwin') {
     mainWindow.setMenu(null)
   }
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/public/index.html#v${app.getVersion()}`);
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
   
+  mainWindow.on('close', (e) => {
+    if (mainWindow.forceClose) return;
+    e.preventDefault();
+    mainWindow.hide();
+  });
   
 }
+
+app.on('before-quit', () => {
+  mainWindow.forceClose = true;
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -141,7 +152,9 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0){
       mainWindow = undefined;
-      loadApp();
+      createWindow();
+    }else{
+      createWindow();
     }
   })
 
@@ -223,7 +236,12 @@ function loadApp(){
             menuManager("Debug")
           }},
           {type: 'separator'},
-          {accelerator: "CommandOrControl+q", label: 'Quit', click: function() {app.quit();}}
+          {accelerator: "CommandOrControl+q", label: 'Quit', click: function() {app.quit();}},
+          {accelerator: "CommandOrControl+w", label: 'Close Window', click: function() {
+            if(mainWindow != undefined && mainWindow.isVisible() == true){
+              mainWindow.close()
+            }
+          }}
         ]
       },{
         label: 'App Control', 
