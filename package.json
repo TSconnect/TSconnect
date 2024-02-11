@@ -44,7 +44,7 @@
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
-      "provisioningProfile": "buildAssets/certs/TSConnect_Test.provisionprofile",
+      "provisioningProfile": "buildAssets/certs/TSConnect.provisionprofile",
       "gatekeeperAssess": false,
       "asarUnpack": [],
       "extendInfo": {
@@ -53,7 +53,7 @@
       }
     },
     "mas": {
-       "type": "development",
+       "type": "distribution",
        "entitlements": "buildAssets/entitlements.mas.plist",
        "entitlementsInherit": "buildAssets/entitlements.mas.inherit.plist",
        "entitlementsLoginHelper": "buildAssets/entitlements.mas.loginhelper.plist"
