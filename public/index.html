@@ -25,7 +25,7 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="tourMonitor.html"><i class="far fa-stop-circle"></i><span>Tour Monitor</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="actionmonitor.html"><i class="far fa-stop-circle"></i><span>Action Monitor</span></a></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
@@ -54,7 +54,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Next Tour Date's start time (YOur time)</span></div>
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1" id="localStartTime"><span>Next Tour Date's start time (YOur time)</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span id="nextTourDate">2/7/2024</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
@@ -67,14 +67,14 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Next tour date's start time (Venue time)</span></div>
+                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Event type</span></div>
                                             <div class="row g-0 align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span id="nextTourDateLocal">2/7/2024 4:00:00pm</span></div>
+                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span id="eventType">TOUR STOP</span></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                                        <div class="col-auto"><i class="fas fa-info fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Next Tour Location</span></div>
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span id="location">Next Tour Location</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span id="tourLocation">San Diego, California, USA</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-search-location fa-2x text-gray-300"></i></div>
@@ -97,7 +97,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Countdown to start</span></div>
+                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Countdown to EVENT start</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span id="countdown">Loading Countdown...</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>

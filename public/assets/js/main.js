@@ -27,20 +27,36 @@ window.onload = async () => {
       let nearest = nearestDate(dates);
       let days = tourdate[nearest]
 
-    // if the page needs nextTourDate
-    let time = toTimestamp(tourdate[nearest]["time"]);
-    if(document.getElementById("nextTourDate"))document.getElementById("nextTourDate").innerText =
-      `${time.toDateString()} ${time.toLocaleTimeString()}`;
-    if(document.getElementById("nextTourDateLocal"))document.getElementById("nextTourDateLocal").innerText =
-      `${time.toDateString()} 4:00:00pm`;
-    if(document.getElementById("tourLocation"))document.getElementById("tourLocation").innerText =
-      `${tourdate[nearest].location}`;
+
+    // set wording to fit event type
+    if(days.type == "tour"){
+      if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEXT TOUR DATE'S START TIME (YOUR TIME)"
+      if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "Tour Stop"
+      if(document.getElementById("location"))document.getElementById("location").innerText = "NEXT TOUR LOCATION"
+    
+    }else if(days.type == "misc"){
+      if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEXT EVENT'S START TIME (YOUR TIME)"
+      if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "Miscellaneous"
+      if(document.getElementById("location"))document.getElementById("location").innerText = "NEXT VENUE LOCATION"
+
+    }else if(days.type == "awards"){
+      if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEXT AWARDS SHOW'S START TIME (YOUR TIME)"
+      if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "Awards Show"
+      if(document.getElementById("location"))document.getElementById("location").innerText = "NEXT AWARDS SHOW LOCATION"
+
+    }
+      // if the page needs nextTourDate
+      let time = toTimestamp(days["startTime"]);
+      if(document.getElementById("nextTourDate"))document.getElementById("nextTourDate").innerText =
+        `${time.toDateString()} ${time.toLocaleTimeString()}`;
+      if(document.getElementById("tourLocation"))document.getElementById("tourLocation").innerText =
+        `${days.location}`;
 
 
     //countdown to next tour date
     if(document.getElementById("countdown") != undefined){
       // Set the date we're counting down to
-      var countDownDate = new Date(days['time']).getTime();
+      var countDownDate = new Date(days['startTime']).getTime();
 
       // Update the count down every 1 second
       var x = setInterval(function() {
@@ -72,7 +88,7 @@ window.onload = async () => {
 }
     
 
-if (title == "tour monitor"){
+if (title == "action monitor"){
   // get the tourdates and then edit it to only include the time in the Dates object
   let tourdate = await getTourDate()
   let dates = editDate(tourdate)
@@ -82,26 +98,56 @@ if (title == "tour monitor"){
   let days = tourdate[nearest]
 
 
+  // Update wording to suit type
+  let time = toTimestamp(days["startTime"]);
+
+  let endTime = toTimestamp(days["endTime"]);
+  if(days.type == "tour"){
+    if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next tour date will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
+    if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Stop's Information"
+  }else if(days.type == "misc"){
+    if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next event will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
+    if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Event's Information"
+
+  }else if(days.type == "awards"){
+    if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next awards show will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
+    if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Awards Show's Information"
+
+  }
+
+
   // Update location
-  let time = toTimestamp(tourdate[nearest]["time"]);
   if(document.getElementById("nextTourDate"))document.getElementById("nextTourDate").innerText =
     `${time.toDateString()} ${time.toLocaleTimeString()}`;
   if(document.getElementById("tourLocation"))document.getElementById("tourLocation").innerText =
-    `${tourdate[nearest].location}`;
+    `${days.location}`;
 
   // Get the livestreams for the date
   if (document.getElementById("livestreams") != undefined) {
 
     // Check if currently it is in the time period(10 hours before to midnight the next day) where live streams will show, if not, update to have the info for the user.
-    if(new Date(days['time']).getTime() - new Date().getTime() > (10 * 60 * 60 * 1000) || (new Date(days['time']).getTime() + (8 * 60 * 60 * 1000)) < new Date().getTime()){ 
-      let tempTimeStart = new Date(new Date(days['time']).getTime() - (10 * 60 * 60 * 1000))
-      let tempTimeEnd = new Date(new Date(days['time']).getTime() + (8 * 60 * 60 * 1000))
-      document.getElementById("livestreams").innerHTML = `Live streams for the next stop will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next stop will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+    console.log((new Date(days['endTime']).getTime() + (2 * 60 * 60 * 1000)), new Date().getTime())
+    if(new Date(days['startTime']).getTime() - new Date().getTime() > (10 * 60 * 60 * 1000) || (new Date(days['endTime']).getTime() + (2 * 60 * 60 * 1000)) < new Date().getTime()){ 
+      let tempTimeStart = new Date(new Date(days['startTime']).getTime() - (10 * 60 * 60 * 1000))
+      let tempTimeEnd = new Date(new Date(days['endTime']).getTime() + (2 * 60 * 60 * 1000))
+
+
+  // Update wording to suit type
+      let text;
+      if(days.type == "tour"){
+        text = `Live streams for the next stop will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next stop will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+      }else if(days.type == "misc"){
+        text = `Live streams for the next event will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next event will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+      }else if(days.type == "awards"){
+        text = `Live streams for the next awards show will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next awards show will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+      }
+      document.getElementById("livestreams").innerHTML = text
       return;
     }
 
     // if in the time zone, get the live streams information
     let streams = await getLive()
+    console.log(streams)
 
     // If none was found, reply with no livestream found
     if (streams == undefined || streams[0] == undefined || streams.length == 0){

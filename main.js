@@ -61,7 +61,8 @@ function CheckForUpdate () {
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      preload: path.join(__dirname, './public/assets/js/main.js')
     }
   })
 
