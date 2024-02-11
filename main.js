@@ -151,7 +151,7 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+  app.quit()
 })
 
 
@@ -223,13 +223,7 @@ function loadApp(){
             menuManager("Debug")
           }},
           {type: 'separator'},
-          {accelerator: "CommandOrControl+q", label: 'Quit', click: function() {app.quit();}},
-          {accelerator: "CommandOrControl+w", label: 'Close Window', click: function() {
-            if(mainWindow != undefined){
-              mainWindow.close()
-              mainWindow = undefined;
-            }
-          }}
+          {accelerator: "CommandOrControl+q", label: 'Quit', click: function() {app.quit();}}
         ]
       },{
         label: 'App Control', 
