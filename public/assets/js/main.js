@@ -100,9 +100,8 @@ if (title == "action monitor"){
 
   // Update wording to suit type
   let time = toTimestamp(days["startTime"]);
-  let endTime = toTimestamp(days["endTime"]);
 
-  // customize wording to match type
+  let endTime = toTimestamp(days["endTime"]);
   if(days.type == "tour"){
     if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next tour date will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
     if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Stop's Information"
