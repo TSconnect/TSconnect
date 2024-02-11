@@ -241,6 +241,11 @@ function loadApp(){
             if(mainWindow != undefined && mainWindow.isVisible() == true){
               mainWindow.close()
             }
+          }},
+          {accelerator: "CommandOrControl+w", label: 'Open Main Window', click: function() {
+            if(mainWindow != undefined && mainWindow.isVisible() == false){
+              mainWindow.show()
+            }
           }}
         ]
       },{
