@@ -28,7 +28,6 @@
     "appId": "com.tsconnect.tsconnect",
     "icon": "buildAssets/assets/AppIcon.icns",
     "afterSign": "tsconnect-notarize",
-    "buildVersion": "021024a",
     "directories": {
       "output": "build"
     },
@@ -41,6 +40,7 @@
         "mas"
       ],
       "category": "public.app-category.utilities",
+      "bundleVersion": "24.0210.2",
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
