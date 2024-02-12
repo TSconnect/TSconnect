@@ -111,7 +111,7 @@ function createWindow () {
     mainWindow.webContents.openDevTools()
   }
 
-  
+
   mainWindow.on('close', (e) => {
     if (mainWindow.forceClose) return;
     e.preventDefault();
