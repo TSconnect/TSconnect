@@ -40,7 +40,7 @@
         "mas"
       ],
       "category": "public.app-category.utilities",
-      "bundleVersion": "24.0210.1",
+      "bundleVersion": "24.0211.4",
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
