@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Action Monitor</title>
+    <title>Blank Page - Brand</title>
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/icon_16x16.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/icon_16x16.png" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_32x32.png">
@@ -25,8 +25,8 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="actionmonitor.html"><i class="far fa-stop-circle"></i><span>Action Monitor</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="livestream.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-lightning">
+                    <li class="nav-item"><a class="nav-link" href="actionmonitor.html"><i class="far fa-stop-circle"></i><span>Action Monitor</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="blank.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-lightning">
                                 <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641zM6.374 1 4.168 8.5H7.5a.5.5 0 0 1 .478.647L6.78 13.04 11.478 7H8a.5.5 0 0 1-.474-.658L9.306 1z"></path>
                             </svg><span>Livestream HQ</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="aboutus.html"><i class="far fa-heart"></i><span>About Us</span></a></li>
@@ -44,54 +44,14 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4" id="tourMonitorTimezone">Action Monitor</h3>
-                    <div class="alert alert-success" role="alert"><span style="font-weight: bold;">All times are in your device's timezone unless specified.</span></div>
-                    <div class="row mb-3">
-                        <div class="col-lg-4">
-                            <div class="card mb-3">
-                                <div class="card-body text-center shadow">
-                                    <h1 class="text-dark">Live Streams</h1>
-                                    <p id="liveExplanation">TSConnect uses 4pm local time as the start of the concert and 12 am local time the next day as the end of the concert.</p>
-                                    <p id="livestreams">Live streams for the next stop will start appearing at:&nbsp;</p>
-                                    <p id="eventInfoTitle" class="text-dark" style="font-weight: bold;">Next Stop's Information</p>
-                                    <p id="tourLocation">Tour Location</p>
-                                    <p id="nextTourDate">Tour Date</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="row mb-3 d-none">
-                                <div class="col">
-                                    <div class="card text-white bg-primary shadow">
-                                        <div class="card-body">
-                                            <div class="row mb-2">
-                                                <div class="col">
-                                                    <p class="m-0">Peformance</p>
-                                                    <p class="m-0"><strong>65.2%</strong></p>
-                                                </div>
-                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                                            </div>
-                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card text-white bg-success shadow">
-                                        <div class="card-body">
-                                            <div class="row mb-2">
-                                                <div class="col">
-                                                    <p class="m-0">Peformance</p>
-                                                    <p class="m-0"><strong>65.2%</strong></p>
-                                                </div>
-                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                                            </div>
-                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="text-dark mb-1">Livestream HQ</h3>
+                    <div class="col-md-8"><iframe
+  src="http://64.23.167.65:8080/embed/video"
+  title="Owncast"
+  height="350px" width="550px"
+  referrerpolicy="origin"
+  allowfullscreen>
+</iframe></div>
                 </div>
             </div>
             <footer class="bg-white sticky-footer">
