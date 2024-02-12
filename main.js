@@ -107,7 +107,10 @@ function createWindow () {
   }
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  if(process.env.TSC_DEBUG == "true"){
+    mainWindow.webContents.openDevTools()
+  }
+  // 
   
   mainWindow.on('close', (e) => {
     if (mainWindow.forceClose) return;
@@ -232,10 +235,6 @@ function loadApp(){
       {
         label: 'TSConnect', 
         submenu: [
-          {accelerator: "CommandOrControl+Shift+d", label: 'Debug', click: function () {
-            menuManager("Debug")
-          }},
-          {type: 'separator'},
           {accelerator: "CommandOrControl+q", label: 'Quit', click: function() {app.quit();}},
           {accelerator: "CommandOrControl+w", label: 'Close Window', click: function() {
             if(mainWindow != undefined && mainWindow.isVisible() == true){
