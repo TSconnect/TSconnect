@@ -19,6 +19,21 @@ window.onload = async () => {
 
   // if current page is dashboard
   if(title == "dashboard"){
+
+      // Get announcements data
+      let announcements = await getAnnouncements();
+
+      // check if announcements dom exist and check if rn is within the announcement time, if yes, display ot
+      if(document.getElementById("announcements")){
+        if(new Date(announcements.start).getTime() <= new Date().getTime() && new Date(announcements.end).getTime() >= new Date().getTime()){
+          document.getElementById("announcements").innerHTML = `<span><p class="fw-bold">${announcements.title}</p>
+  ${announcements.description}</span>`
+          document.getElementById("announcements").style.removeProperty("display");
+        }
+      }
+
+
+
       // get the tourdates and then edit it to only include the time in the Dates object
       let tourdate = await getTourDate()
       let dates = editDate(tourdate)
@@ -220,6 +235,27 @@ async function getTourDate(){
     method: "get",
     maxBodyLength: Infinity,
     url: "https://tsconnect.github.io/contents/TSConnect/TheErasTourDates.json",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let tourdate = await axios.request(config);
+
+  return tourdate.data;
+
+}
+
+/**
+ * Get the current announcement
+ *
+ * @return {Object} An objects containing info for the announcement
+ */
+async function getAnnouncements(){
+  let config = {
+    method: "get",
+    maxBodyLength: Infinity,
+    url: "https://tsconnect.github.io/contents/TSConnect/announcements.json",
     headers: {
       "Content-Type": "application/json",
     },
