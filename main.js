@@ -107,7 +107,10 @@ function createWindow () {
   }
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  if(process.env.TSC_DEBUG == "true"){
+    mainWindow.webContents.openDevTools()
+  }
+
   
   mainWindow.on('close', (e) => {
     if (mainWindow.forceClose) return;
