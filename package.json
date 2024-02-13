@@ -40,11 +40,11 @@
         "mas"
       ],
       "category": "public.app-category.utilities",
-      "bundleVersion": "24.0227.1",
+      "bundleVersion": "24.0227.2",
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
-      "provisioningProfile": "buildAssets/certs/TSConnect.provisionprofile",
+      "provisioningProfile": "buildAssets/certs/TSConnect_Test.provisionprofile",
       "gatekeeperAssess": false,
       "asarUnpack": [],
       "extendInfo": {
@@ -53,11 +53,11 @@
       }
     },
     "mas": {
-      "type": "distribution",
-      "entitlements": "buildAssets/entitlements.mas.plist",
-      "entitlementsInherit": "buildAssets/entitlements.mas.inherit.plist",
-      "entitlementsLoginHelper": "buildAssets/entitlements.mas.loginhelper.plist"
-    },
+       "type": "distribution",
+       "entitlements": "buildAssets/entitlements.mas.plist",
+       "entitlementsInherit": "buildAssets/entitlements.mas.inherit.plist",
+       "entitlementsLoginHelper": "buildAssets/entitlements.mas.loginhelper.plist"
+     },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
       "icon": "buildAssets/assets/AppIcon.icns",
