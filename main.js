@@ -52,6 +52,7 @@ rpc.login({ clientId }).catch(console.error);
 log.errorHandler.startCatching()
 
 function CheckForUpdate () {
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     title: 'TSConnect',
@@ -71,6 +72,9 @@ function CheckForUpdate () {
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
+
+
+  autoUpdater.checkForUpdatesAndNotify();
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
