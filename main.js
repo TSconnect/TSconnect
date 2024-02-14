@@ -52,6 +52,7 @@ rpc.login({ clientId }).catch(console.error);
 log.errorHandler.startCatching()
 
 function CheckForUpdate () {
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     title: 'TSConnect',
@@ -71,6 +72,9 @@ function CheckForUpdate () {
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
+
+
+  autoUpdater.checkForUpdatesAndNotify();
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -144,11 +148,10 @@ app.whenReady().then(() => {
       loadApp()
     }else{
       log.info(`[Version Check] Checking for Updates`)
-      CheckForUpdate()
+      loadApp()
     }
     
   }
-  autoUpdater.checkForUpdatesAndNotify();
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
