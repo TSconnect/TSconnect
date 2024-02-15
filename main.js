@@ -17,8 +17,6 @@ function hash(string) {
   return createHash('sha256').update(string).digest('hex');
 }
 
-log.transports.file.level = 'info';
-log.initialize()
 let update = false;
 let mainWindow;
 
