@@ -147,12 +147,17 @@ app.on('before-quit', () => {
   mainWindow.forceClose = true;
 });
 
+/**
+ * 
+ * @param {String} clientKey Register a client key with the registry
+ * @returns {Object} Object returned by the registry
+ */
 async function registerClientKey(clientKey) {
-  // if(!clientKey){
-  //   throwError("First Launch Failed.", "Please try restarting application or contact support.")
-  //   app.quit()
-  //   return
-  // }
+  if(!clientKey){
+    throwError("First Launch Failed.", "Please try restarting application or contact support.")
+    app.quit()
+    return
+  }
   let data = JSON.stringify({
     "clientKey": clientKey
   });
