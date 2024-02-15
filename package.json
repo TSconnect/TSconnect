@@ -53,11 +53,11 @@
       }
     },
     "mas": {
-       "type": "distribution",
-       "entitlements": "buildAssets/entitlements.mas.plist",
-       "entitlementsInherit": "buildAssets/entitlements.mas.inherit.plist",
-       "entitlementsLoginHelper": "buildAssets/entitlements.mas.loginhelper.plist"
-     },
+      "type": "distribution",
+      "entitlements": "buildAssets/entitlements.mas.plist",
+      "entitlementsInherit": "buildAssets/entitlements.mas.inherit.plist",
+      "entitlementsLoginHelper": "buildAssets/entitlements.mas.loginhelper.plist"
+    },
     "dmg": {
       "background": "buildAssets/assets/DMG_Background.tiff",
       "icon": "buildAssets/assets/AppIcon.icns",
@@ -83,8 +83,12 @@
   "dependencies": {
     "@electron/notarize": "^2.2.0",
     "@electron/osx-sign": "^1.0.5",
+    "axios": "^1.6.7",
+    "crypto": "^1.0.1",
     "discord-rpc-electron": "^4.0.1",
     "electron-log": "^5.0.3",
-    "electron-updater": "^6.1.7"
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.7",
+    "uuid": "^9.0.1"
   }
 }

@@ -1,15 +1,28 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, globalShortcut, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
+const axios = require('axios');
+const { 
+  v1: uuidv1,
+  v4: uuidv4,
+} = require('uuid');
 const { autoUpdater } = require('electron-updater');
+const Store = require('electron-store');
 const path = require('node:path')
 const url = require('url');
 const log = require("electron-log");
 const DiscordRPC = require('discord-rpc-electron');
+const { createHash } = require('crypto');
+
+function hash(string) {
+  return createHash('sha256').update(string).digest('hex');
+}
 
 log.transports.file.level = 'info';
 log.initialize()
 let update = false;
 let mainWindow;
+
+const store = new Store();
 
 // Set this to your Client ID.
 const clientId = '1199765277903175790';
@@ -51,6 +64,11 @@ rpc.login({ clientId }).catch(console.error);
 
 log.errorHandler.startCatching()
 
+function checkForFirstRun(){
+  if(store.get("isFirstLaunch") == undefined || store.get("isFirstLaunch") == true)return true;
+  return false;
+}
+
 function CheckForUpdate () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -71,11 +89,16 @@ function CheckForUpdate () {
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
+  autoUpdater.checkForUpdatesAndNotify();
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
   
   
+}
+
+function throwError (title, error) {
+  dialog.showErrorBox(title, error) 
 }
 
 function createWindow () {
@@ -124,13 +147,50 @@ app.on('before-quit', () => {
   mainWindow.forceClose = true;
 });
 
+async function registerClientKey(clientKey) {
+  // if(!clientKey){
+  //   throwError("First Launch Failed.", "Please try restarting application or contact support.")
+  //   app.quit()
+  //   return
+  // }
+  let data = JSON.stringify({
+    "clientKey": clientKey
+  });
+  
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://tsconnect.taylorcentral.live/api/v1/register',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  try{
+    return (await axios.request(config)).data
+  }catch(e) {
+    return e
+  }
+  
+  
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   log.info(`[App Version] ${app.getVersion()}`)
   log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
   log.info(`[PLATFORM] ${process.platform}`)
+
+  if(checkForFirstRun()){
+    let id = hash(uuidv4());
+    console.log("running")
+    let key = (await registerClientKey(id)).data.registeredKey.key;
+    store.set("clientKey", key)
+    store.set("isFirstLaunch", false)
+  }
+  log.info(`[CLIENT KEY] ${store.get("clientKey")}`)
 
   //change this once able to be signed
   if(process.env["TSC_TESTING"] == "true"){
@@ -144,11 +204,10 @@ app.whenReady().then(() => {
       loadApp()
     }else{
       log.info(`[Version Check] Checking for Updates`)
-      CheckForUpdate()
+      loadApp()
     }
     
   }
-  autoUpdater.checkForUpdatesAndNotify();
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

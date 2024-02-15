@@ -2,9 +2,13 @@
 
 // Define neccesary variable and libraries
 const { ipcRenderer } = require("electron");
+const Store = require('electron-store');
+const store = new Store();
+
 
 // when the window loads
 window.onload = async () => {
+  let clientKey = store.get("clientKey")
   // set the document title, needed to execute specific actions
   var title = document.title;
 
@@ -21,7 +25,7 @@ window.onload = async () => {
   if(title == "dashboard"){
 
       // Get announcements data
-      let announcements = await getAnnouncements();
+      let announcements = await getAnnouncements(clientKey);
 
       // check if announcements dom exist and check if rn is within the announcement time, if yes, display ot
       if(document.getElementById("announcements")){
@@ -35,7 +39,7 @@ window.onload = async () => {
 
 
       // get the tourdates and then edit it to only include the time in the Dates object
-      let tourdate = await getTourDate()
+      let tourdate = await getTourDate(clientKey)
       let dates = editDate(tourdate)
 
       // check for nearest date in the future, get the info, and update the dashboard
@@ -105,7 +109,7 @@ window.onload = async () => {
 
 if (title == "action monitor"){
   // get the tourdates and then edit it to only include the time in the Dates object
-  let tourdate = await getTourDate()
+  let tourdate = await getTourDate(clientKey)
   let dates = editDate(tourdate)
 
   // check for nearest date in the future, get the info, and update the dashboard
@@ -161,7 +165,7 @@ if (title == "action monitor"){
     }
 
     // if in the time zone, get the live streams information
-    let streams = await getLive()
+    let streams = await getLive(clientKey)
     console.log(streams)
 
     // If none was found, reply with no livestream found
@@ -230,19 +234,20 @@ function openLink(url) {
  *
  * @return {Array[Object]} An array of objects containing info for each show
  */
-async function getTourDate(){
+async function getTourDate(clientKey){
   let config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: "https://tsconnect.github.io/contents/TSConnect/TheErasTourDates.json",
+    url: "https://tsconnect.taylorcentral.live/api/v1/contents/EventDates.json",
     headers: {
       "Content-Type": "application/json",
+      "clientKey": clientKey
     },
   };
 
   let tourdate = await axios.request(config);
 
-  return tourdate.data;
+  return tourdate.data.data;
 
 }
 
@@ -251,19 +256,20 @@ async function getTourDate(){
  *
  * @return {Object} An objects containing info for the announcement
  */
-async function getAnnouncements(){
+async function getAnnouncements(clientKey){
   let config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: "https://tsconnect.github.io/contents/TSConnect/announcements.json",
+    url: "https://tsconnect.taylorcentral.live/api/v1/contents/announcements.json",
     headers: {
       "Content-Type": "application/json",
+      "clientKey": clientKey
     },
   };
 
   let tourdate = await axios.request(config);
 
-  return tourdate.data;
+  return tourdate.data.data;
 
 }
 
@@ -289,18 +295,19 @@ function editDate(tourdate) {
  *
  * @return {Object} An object containing the livestreams on a date 
  */
-async function getLive(){
-
+async function getLive(clientKey){
   let config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: "https://tsconnect.github.io/contents/TSConnect/livestreams.json",
+    url: "https://tsconnect.taylorcentral.live/api/v1/contents/livestreams.json",
     headers: {
       "Content-Type": "application/json",
+      "clientKey": clientKey
     },
   };
-  let streams = await axios.request(config);
-  return streams.data;
+
+  let streams = (await axios.request(config));
+  return streams.data.data;
 }
 
 
