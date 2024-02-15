@@ -5,6 +5,11 @@ const { ipcRenderer } = require("electron");
 const Store = require('electron-store');
 const store = new Store();
 
+function log(message) {
+  console.log(message)
+  ipcRenderer.send("logConsole", message)
+}
+
 
 // when the window loads
 window.onload = async () => {
@@ -23,6 +28,7 @@ window.onload = async () => {
 
   // if current page is dashboard
   if(title == "dashboard"){
+    log("Loading Dashboard")
 
       // Get announcements data
       let announcements = await getAnnouncements(clientKey);
@@ -108,6 +114,7 @@ window.onload = async () => {
     
 
 if (title == "action monitor"){
+  log("Loading Action Monitor")
   // get the tourdates and then edit it to only include the time in the Dates object
   let tourdate = await getTourDate(clientKey)
   let dates = editDate(tourdate)
@@ -145,7 +152,6 @@ if (title == "action monitor"){
   if (document.getElementById("livestreams") != undefined) {
 
     // Check if currently it is in the time period(10 hours before to midnight the next day) where live streams will show, if not, update to have the info for the user.
-    console.log((new Date(days['endTime']).getTime() + (2 * 60 * 60 * 1000)), new Date().getTime())
     if(new Date(days['startTime']).getTime() - new Date().getTime() > (10 * 60 * 60 * 1000) || (new Date(days['endTime']).getTime() + (2 * 60 * 60 * 1000)) < new Date().getTime()){ 
       let tempTimeStart = new Date(new Date(days['startTime']).getTime() - (10 * 60 * 60 * 1000))
       let tempTimeEnd = new Date(new Date(days['endTime']).getTime() + (2 * 60 * 60 * 1000))
@@ -166,7 +172,6 @@ if (title == "action monitor"){
 
     // if in the time zone, get the live streams information
     let streams = await getLive(clientKey)
-    console.log(streams)
 
     // If none was found, reply with no livestream found
     if (streams == undefined || streams[0] == undefined || streams.length == 0){

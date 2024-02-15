@@ -185,8 +185,8 @@ app.whenReady().then(async () => {
 
   if(checkForFirstRun()){
     let id = hash(uuidv4());
-    console.log("running")
-    let key = (await registerClientKey(id)).data.registeredKey.key;
+    let clientKey = await registerClientKey(id)
+    let key = (clientKey).data.registeredKey.key;
     store.set("clientKey", key)
     store.set("isFirstLaunch", false)
   }
@@ -230,13 +230,21 @@ app.on('window-all-closed', function () {
 })
 
 
+ipcMain.on("logConsole", (event, data) => {
+  log.info(`[RENDERER LOGS] ${data}`)
+})
+
+
 let det;
 let sta;
+
 
 ipcMain.on("sendRPC", (event, details, state) => {
   det = details;
   sta = state
 })
+
+
 setInterval(() => {
   if(mainWindow != undefined){
     setActivity(det, sta)
