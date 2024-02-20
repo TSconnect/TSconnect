@@ -89,6 +89,8 @@
     "electron-log": "^5.0.3",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.1.7",
+    "macos-notification-state": "^3.0.0",
+    "node-notifier": "^10.0.1",
     "uuid": "^9.0.1"
   }
 }

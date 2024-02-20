@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog, ipcMain, ipcRenderer } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain, Notification } = require('electron')
+const Notify = require('node-notifier').NotificationCenter;
 const appConfig = require("./config.json")
 const axios = require('axios');
 let clientKey;
@@ -16,6 +17,11 @@ const DiscordRPC = require('discord-rpc-electron');
 // define necessary variables
 let mainWindow;
 const store = new Store();
+const notifier = new Notify({
+  withFallback: false,
+  customPath: path.join(__dirname, "./node_modules/node-notifier/vendor/mac.noindex/TSConnect.app/Contents/MacOS/TSConnect")
+})
+let readyForNotification = false;
 
 // Discord RPC Setup
 // Set this to your Client ID.
@@ -110,6 +116,8 @@ app.whenReady().then(async () => {
     }
   })
 
+  notify("Test", "test")
+
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -119,6 +127,35 @@ app.on('window-all-closed', function () {
   app.quit()
 })
 
+
+// Loops
+
+setInterval(async () => {
+  if(store.get("clientKey") != undefined && readyForNotification){
+    checkBackendUp()
+    let key = store.get("clientKey")
+    checkRegistration(key)
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'https://tsconnect.taylorcentral.live/api/v1/contents/notification',
+      headers: { 
+        'clientKey': key
+      }
+    };
+    
+    let data = await axios.request(config)
+    data=data.data
+    if(data.success){
+      data = data.data
+      if(!data.notified.includes(key)){
+        notify(data.title, data.description, data.sound, data.wait)
+        notified(key)
+      }
+    }
+
+  }
+}, 10000)
 
 
 // Discord RPC Updates
@@ -213,6 +250,20 @@ ipcMain.on("getLive", async (event) => {
   }
 })
 
+ipcMain.on("notify", async (event, title, message, sound, wait) => {
+  try{
+    notify(title, message, sound, wait)
+    event.returnValue = {
+      success: true
+    }
+  }catch(e){
+    event.returnValue = {
+      success: false,
+      message: e
+    }
+  }
+})
+
 
 
 // Auto Updater
@@ -242,9 +293,72 @@ autoUpdater.on('update-downloaded', (info) => {
   autoUpdater.quitAndInstall()
 });
 
+// Notification Callback
+
+
+notifier.on('click', function (notifierObject, options, event) {
+  // Triggers if `wait: true` and user clicks notification
+  console.log("hi")
+  createWindow()
+});
+
+notifier.on('timeout', function (notifierObject, options) {
+  // Triggers if `wait: true` and notification closes
+  console.log("hi")
+});
+
 
 
 // All functions
+
+/**
+ * Return to the server to check that the app has notified the user
+ * 
+ * @param {String} clientKey the registered client key!
+ * @returns {Object} object returned by the server
+ */
+async function notified(clientKey){
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://tsconnect.taylorcentral.live/api/v1/contents/notificationCallback',
+    headers: { 
+      'clientKey': clientKey
+    }
+  };
+  
+  return (await axios.request(config)).data
+}
+
+/**
+ * Send a notification
+ * 
+ * @param {String} title the title of the notification
+ * @param {String} message the message of the notification
+ * @param {boolean} sound whether or not to play a sound | default: true
+ * @param {boolean} wait whether or not to wait for callback | default: true
+ */
+function notify(title, message, sound=true, wait=true){
+  console.log(wait)
+
+  notifier.notify(
+    {
+      title: title,
+      message: message,
+      sound: sound, // Only Notification Center or Windows Toasters
+      wait: wait // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+    },
+    function (err, response, metadata) {
+      // Response is response from notification
+      // Metadata contains activationType, activationAt, deliveredAt
+      if(err == null){
+        log.info(response, metadata)
+      }else{
+        log.error(err)
+      }
+    }
+  );
+}
 
 
 /**
@@ -462,6 +576,7 @@ function createWindow () {
     e.preventDefault();
     mainWindow.hide();
   });
+  readyForNotification = true;
   
 }
 
