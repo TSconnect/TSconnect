@@ -66,7 +66,8 @@ app.whenReady().then(async () => {
   log.info(`[App Version] ${app.getVersion()}`)
   log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
   log.info(`[PLATFORM] ${process.platform}`)
-  await checkBackendUp()
+  checkBackendUp()
+  console.log("hi")
 
   if(checkForFirstRun()){
     log.log("[CLIENT REGISTRATION] First Run, Registrating ClientKey")
@@ -181,7 +182,7 @@ setInterval(() => {
 // IPC Main Processes
 
 ipcMain.on("checkBackendPing", async (event, details, state) => {
-  event.returnValue = await checkBackendUp();
+  event.returnValue = checkBackendUp();
 })
 
 
