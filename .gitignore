@@ -10,3 +10,4 @@ private_keys/
 buildAssets/
 
 changelog.md
+.DS_Store

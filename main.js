@@ -53,6 +53,7 @@ log.errorHandler.startCatching()
 
 function CheckForUpdate () {
 
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     title: 'TSConnect',
@@ -85,7 +86,28 @@ function CheckForUpdate () {
 function createWindow () {
   // If mainwindow somehow is undefined, create a new window and load the main index file
   if(mainWindow == undefined){
+  // If mainwindow somehow is undefined, create a new window and load the main index file
+  if(mainWindow == undefined){
   // Create the browser window.
+    mainWindow = new BrowserWindow({
+      title: 'TSConnect',
+      width: 950,
+      height: 700,
+      resizable: false,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      }
+    })
+
+    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
+
+    // window exists, and is actually hidden, then show the window.
+  }else{
+    if(!mainWindow.isVisible()){
+      mainWindow.show();
+    }
+  }
     mainWindow = new BrowserWindow({
       title: 'TSConnect',
       width: 950,
@@ -174,6 +196,7 @@ app.whenReady().then(async () => {
     }else{
       log.info(`[Version Check] Checking for Updates`)
       loadApp()
+      loadApp()
     }
     
   }
@@ -181,10 +204,6 @@ app.whenReady().then(async () => {
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0){
-      mainWindow = undefined;
-      loadApp();
-    }
     if (BrowserWindow.getAllWindows().length === 0){
       createWindow();
     }else{
@@ -527,6 +546,8 @@ function loadApp(){
       },{
         label: 'App Control', 
         submenu: [
+          {accelerator:"Alt+CommandOrControl+h", label: 'Home', click: function () { 
+            log.info("[SHORTCUT TRIGGERED] Navigating to Home")
           {accelerator:"Alt+CommandOrControl+h", label: 'Home', click: function () { 
             log.info("[SHORTCUT TRIGGERED] Navigating to Home")
             menuManager("Home")

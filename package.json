@@ -53,7 +53,7 @@
       }
     },
     "mas": {
-       "type": "distribution",
+       "type": "development",
        "entitlements": "buildAssets/entitlements.mas.plist",
        "entitlementsInherit": "buildAssets/entitlements.mas.inherit.plist",
        "entitlementsLoginHelper": "buildAssets/entitlements.mas.loginhelper.plist"
