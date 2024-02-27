@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog, ipcMain, Notification } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain, Notification, pushNotifications } = require('electron')
 const Notify = require('node-notifier').NotificationCenter;
 const appConfig = require("./config.json")
 const axios = require('axios');
@@ -66,8 +66,8 @@ app.whenReady().then(async () => {
   log.info(`[App Version] ${app.getVersion()}`)
   log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
   log.info(`[PLATFORM] ${process.platform}`)
+  log.info(`[CONFIG LOCATION] "${store.path}"`)
   checkBackendUp()
-  console.log("hi")
 
   if(checkForFirstRun()){
     log.log("[CLIENT REGISTRATION] First Run, Registrating ClientKey")
@@ -296,13 +296,11 @@ autoUpdater.on('update-downloaded', (info) => {
 
 notifier.on('click', function (notifierObject, options, event) {
   // Triggers if `wait: true` and user clicks notification
-  console.log("hi")
   createWindow()
 });
 
 notifier.on('timeout', function (notifierObject, options) {
   // Triggers if `wait: true` and notification closes
-  console.log("hi")
 });
 
 
@@ -337,7 +335,6 @@ async function notified(clientKey){
  * @param {boolean} wait whether or not to wait for callback | default: true
  */
 function notify(title, message, sound=true, wait=true){
-  console.log(wait)
 
   notifier.notify(
     {
@@ -593,6 +590,7 @@ async function registerClientKey(clientKey) {
   let data = JSON.stringify({
     "clientKey": clientKey
   });
+
   
   let config = {
     method: 'post',
