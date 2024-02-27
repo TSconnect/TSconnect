@@ -1,12 +1,12 @@
 {
   "name": "tsconnect",
-  "version": "0.1.0-hf1",
+  "version": "0.1.1",
   "description": "Your command center to everything Taylor Swift!",
   "main": "main.js",
   "scripts": {
     "dist:windows": "electron-builder --win --publish always",
     "start": "electron .",
-    "test": "TSC_TESTING=true electron .",
+    "test": "TSC_TESTING=true TSC_DEBUG=true electron .",
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --mac",
     "dist": "electron-builder --mac --publish always",
@@ -41,7 +41,7 @@
         "zip"
       ],
       "category": "public.app-category.utilities",
-      "bundleVersion": "24.0213.1",
+      "bundleVersion": "24.0227.2",
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
@@ -83,8 +83,14 @@
   "dependencies": {
     "@electron/notarize": "^2.2.0",
     "@electron/osx-sign": "^1.0.5",
+    "axios": "^1.6.7",
+    "crypto": "^1.0.1",
     "discord-rpc-electron": "^4.0.1",
     "electron-log": "^5.0.3",
-    "electron-updater": "^6.1.7"
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.7",
+    "macos-notification-state": "^3.0.0",
+    "node-notifier": "^10.0.1",
+    "uuid": "^9.0.1"
   }
 }

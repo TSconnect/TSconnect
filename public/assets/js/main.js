@@ -3,21 +3,16 @@
 // Define neccesary variable and libraries
 const { ipcRenderer } = require("electron");
 
+
+function log(message) {
+  console.log(message)
+  ipcRenderer.send("logConsole", message)
+}
+
+
 // when the window loads
 window.onload = async () => {
-  // send message to console for those debugging
-  console.log("")
-  console.log(`
-Welcome to the debug console!
-
-Only renderer side logs will appear here, backend logs will be logged in your machine's log folder. 
-
-To find the backend logs, please use the guide below:
-MacOS: ~/Library/Logs/TSConnect/main.log
-Windows: %USERPROFILE%\\AppData\\Roaming\\TSConnect\\logs\\main.log
-  `)
-  console.log("")
-
+  ipcRenderer.send("checkBackendPing")
   // set the document title, needed to execute specific actions
   var title = document.title;
 
@@ -32,6 +27,22 @@ Windows: %USERPROFILE%\\AppData\\Roaming\\TSConnect\\logs\\main.log
 
   // if current page is dashboard
   if(title == "dashboard"){
+    log("Loading Dashboard")
+
+      // Get announcements data
+      let announcements = await getAnnouncements();
+
+      // check if announcements dom exist and check if rn is within the announcement time, if yes, display ot
+      if(document.getElementById("announcements")){
+        if(new Date(announcements.start).getTime() <= new Date().getTime() && new Date(announcements.end).getTime() >= new Date().getTime()){
+          document.getElementById("announcements").innerHTML = `<span><p class="fw-bold">${announcements.title}</p>
+  ${announcements.description}</span>`
+          document.getElementById("announcements").style.removeProperty("display");
+        }
+      }
+
+
+
       // get the tourdates and then edit it to only include the time in the Dates object
       let tourdate = await getTourDate()
       let dates = editDate(tourdate)
@@ -40,20 +51,36 @@ Windows: %USERPROFILE%\\AppData\\Roaming\\TSConnect\\logs\\main.log
       let nearest = nearestDate(dates);
       let days = tourdate[nearest]
 
-    // if the page needs nextTourDate
-    let time = toTimestamp(tourdate[nearest]["time"]);
-    if(document.getElementById("nextTourDate"))document.getElementById("nextTourDate").innerText =
-      `${time.toDateString()} ${time.toLocaleTimeString()}`;
-    if(document.getElementById("nextTourDateLocal"))document.getElementById("nextTourDateLocal").innerText =
-      `${time.toDateString()} 4:00:00pm`;
-    if(document.getElementById("tourLocation"))document.getElementById("tourLocation").innerText =
-      `${tourdate[nearest].location}`;
+
+    // set wording to fit event type
+    if(days.type == "tour"){
+      if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEXT TOUR DATE'S START TIME (YOUR TIME)"
+      if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "Tour Stop"
+      if(document.getElementById("location"))document.getElementById("location").innerText = "NEXT TOUR LOCATION"
+    
+    }else if(days.type == "misc"){
+      if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEXT EVENT'S START TIME (YOUR TIME)"
+      if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "Miscellaneous"
+      if(document.getElementById("location"))document.getElementById("location").innerText = "NEXT VENUE LOCATION"
+
+    }else if(days.type == "awards"){
+      if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEXT AWARDS SHOW'S START TIME (YOUR TIME)"
+      if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "Awards Show"
+      if(document.getElementById("location"))document.getElementById("location").innerText = "NEXT AWARDS SHOW LOCATION"
+
+    }
+      // if the page needs nextTourDate
+      let time = toTimestamp(days["startTime"]);
+      if(document.getElementById("nextTourDate"))document.getElementById("nextTourDate").innerText =
+        `${time.toDateString()} ${time.toLocaleTimeString()}`;
+      if(document.getElementById("tourLocation"))document.getElementById("tourLocation").innerText =
+        `${days.location}`;
 
 
     //countdown to next tour date
     if(document.getElementById("countdown") != undefined){
       // Set the date we're counting down to
-      var countDownDate = new Date(days['time']).getTime();
+      var countDownDate = new Date(days['startTime']).getTime();
 
       // Update the count down every 1 second
       var x = setInterval(function() {
@@ -85,7 +112,8 @@ Windows: %USERPROFILE%\\AppData\\Roaming\\TSConnect\\logs\\main.log
 }
     
 
-if (title == "tour monitor"){
+if (title == "action monitor"){
+  log("Loading Action Monitor")
   // get the tourdates and then edit it to only include the time in the Dates object
   let tourdate = await getTourDate()
   let dates = editDate(tourdate)
@@ -95,21 +123,49 @@ if (title == "tour monitor"){
   let days = tourdate[nearest]
 
 
+  // Update wording to suit type
+  let time = toTimestamp(days["startTime"]);
+
+  let endTime = toTimestamp(days["endTime"]);
+  if(days.type == "tour"){
+    if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next tour date will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
+    if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Stop's Information"
+  }else if(days.type == "misc"){
+    if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next event will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
+    if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Event's Information"
+
+  }else if(days.type == "awards"){
+    if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next awards show will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
+    if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Awards Show's Information"
+
+  }
+
+
   // Update location
-  let time = toTimestamp(tourdate[nearest]["time"]);
   if(document.getElementById("nextTourDate"))document.getElementById("nextTourDate").innerText =
     `${time.toDateString()} ${time.toLocaleTimeString()}`;
   if(document.getElementById("tourLocation"))document.getElementById("tourLocation").innerText =
-    `${tourdate[nearest].location}`;
+    `${days.location}`;
 
   // Get the livestreams for the date
   if (document.getElementById("livestreams") != undefined) {
 
     // Check if currently it is in the time period(10 hours before to midnight the next day) where live streams will show, if not, update to have the info for the user.
-    if(new Date(days['time']).getTime() - new Date().getTime() > (10 * 60 * 60 * 1000) || (new Date(days['time']).getTime() + (8 * 60 * 60 * 1000)) < new Date().getTime()){ 
-      let tempTimeStart = new Date(new Date(days['time']).getTime() - (10 * 60 * 60 * 1000))
-      let tempTimeEnd = new Date(new Date(days['time']).getTime() + (8 * 60 * 60 * 1000))
-      document.getElementById("livestreams").innerHTML = `Live streams for the next stop will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next stop will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+    if(new Date(days['startTime']).getTime() - new Date().getTime() > (10 * 60 * 60 * 1000) || (new Date(days['endTime']).getTime() + (2 * 60 * 60 * 1000)) < new Date().getTime()){ 
+      let tempTimeStart = new Date(new Date(days['startTime']).getTime() - (10 * 60 * 60 * 1000))
+      let tempTimeEnd = new Date(new Date(days['endTime']).getTime() + (2 * 60 * 60 * 1000))
+
+
+  // Update wording to suit type
+      let text;
+      if(days.type == "tour"){
+        text = `Live streams for the next stop will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next stop will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+      }else if(days.type == "misc"){
+        text = `Live streams for the next event will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next event will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+      }else if(days.type == "awards"){
+        text = `Live streams for the next awards show will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next awards show will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+      }
+      document.getElementById("livestreams").innerHTML = text
       return;
     }
 
@@ -183,18 +239,18 @@ function openLink(url) {
  * @return {Array[Object]} An array of objects containing info for each show
  */
 async function getTourDate(){
-  let config = {
-    method: "get",
-    maxBodyLength: Infinity,
-    url: "https://tsconnect.github.io/contents/TSConnect/TheErasTourDates.json",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+  return ipcRenderer.sendSync("getTourDate")
 
-  let tourdate = await axios.request(config);
+}
 
-  return tourdate.data;
+/**
+ * Get the current announcement
+ *
+ * @return {Object} An objects containing info for the announcement
+ */
+async function getAnnouncements(){
+
+  return ipcRenderer.sendSync("getAnnouncements");
 
 }
 
@@ -221,17 +277,7 @@ function editDate(tourdate) {
  * @return {Object} An object containing the livestreams on a date 
  */
 async function getLive(){
-
-  let config = {
-    method: "get",
-    maxBodyLength: Infinity,
-    url: "https://tsconnect.github.io/contents/TSConnect/livestreams.json",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  let streams = await axios.request(config);
-  return streams.data;
+  return ipcRenderer.sendSync("getLive");
 }
 
 

@@ -5,3 +5,29 @@ iframe {
   overflow: hidden;
 }
 
+/* Customize the embedded stream container */
+
+iframe {
+  border: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  margin: 0 auto;
+}
+
+/* Style the iframe title (optional) */
+
+iframe[title="Owncast"] {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* Style the iframe content (optional) */
+
+iframe[title="Owncast"] body {
+  margin: 0;
+  padding: 10px;
+}
+

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Tour Monitor</title>
+    <title>Action Monitor</title>
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/icon_16x16.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/icon_16x16.png" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_32x32.png">
@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/iframe.css">
     <link rel="stylesheet" href="assets/css/Social-Icon-Circle.css">
 </head>
 
@@ -25,10 +24,7 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="tourMonitor.html"><i class="far fa-stop-circle"></i><span>Tour Monitor</span></a></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link active" href="actionmonitor.html"><i class="far fa-stop-circle"></i><span>Action Monitor</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="aboutus.html"><i class="far fa-heart"></i><span>About Us</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
@@ -39,20 +35,21 @@
                 <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                         <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <p style="margin: 1px;">TSConnect is in no way associated or affiliated with Taylor Swift or Taylor Nation.</p>
+                            <p style="margin: 1px;width: 410px;">TSConnect is not affiliated with Taylor Swift. <br>To disable notifications, use MacOS' notification settings.</p>
                         </form>
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4" id="tourMonitorTimezone">Tour Monitor (All times are in your device's timezone unless specified)</h3>
+                    <h3 class="text-dark mb-4" id="tourMonitorTimezone">Action Monitor</h3>
+                    <div class="alert alert-success" role="alert"><span style="font-weight: bold;">All times are in your device's timezone unless specified.</span></div>
                     <div class="row mb-3">
                         <div class="col-lg-4">
                             <div class="card mb-3">
                                 <div class="card-body text-center shadow">
                                     <h1 class="text-dark">Live Streams</h1>
-                                    <p>TSConnect uses 4pm local time as the start of the concert and 12 am local time the next day as the end of the concert.</p>
+                                    <p id="liveExplanation">TSConnect uses 4pm local time as the start of the concert and 12 am local time the next day as the end of the concert.</p>
                                     <p id="livestreams">Live streams for the next stop will start appearing at:&nbsp;</p>
-                                    <p class="text-dark" style="font-weight: bold;">Next Stop's Information</p>
+                                    <p id="eventInfoTitle" class="text-dark" style="font-weight: bold;">Next Stop's Information</p>
                                     <p id="tourLocation">Tour Location</p>
                                     <p id="nextTourDate">Tour Date</p>
                                 </div>

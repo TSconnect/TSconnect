@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/iframe.css">
     <link rel="stylesheet" href="assets/css/Social-Icon-Circle.css">
 </head>
 
@@ -25,11 +24,8 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="tourMonitor.html"><i class="far fa-stop-circle"></i><span>Tour Monitor</span></a></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" href="aboutus.html"><i class="far fa-heart"></i><span>About US</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="actionmonitor.html"><i class="far fa-stop-circle"></i><span>Action Monitor</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="aboutus.html"><i class="far fa-heart"></i><span>About Us</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -39,7 +35,7 @@
                 <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                         <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <p style="margin: 1px;">TSConnect is in no way associated or affiliated with Taylor Swift or Taylor Nation.</p>
+                            <p style="margin: 1px;width: 410px;">TSConnect is not affiliated with Taylor Swift. <br>To disable notifications, use MacOS' notification settings.</p>
                         </form>
                     </div>
                 </nav>
@@ -47,14 +43,14 @@
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0" id="timezone-1">Dashboard (All times are in your device's timezone unless specified)</h3>
                     </div>
-                    <div class="alert alert-success" role="alert"><span><strong>Note: TSConnect uses 4pm venue time as the concert start time and 12am venue time the next day as the concert end time.</strong></span></div>
+                    <div class="alert alert-info" role="alert" id="announcements" style="display: none;"><span><strong>announcements</strong></span></div>
                     <div class="row">
                         <div class="col-md-6 col-xl-3 mb-4">
                             <div class="card shadow border-start-primary py-2">
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Next Tour Date's start time (YOur time)</span></div>
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1" id="localStartTime"><span>Next Tour Date's start time (YOur time)</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span id="nextTourDate">2/7/2024</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
@@ -67,14 +63,14 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Next tour date's start time (Venue time)</span></div>
+                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Event type</span></div>
                                             <div class="row g-0 align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span id="nextTourDateLocal">2/7/2024 4:00:00pm</span></div>
+                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span id="eventType">TOUR STOP</span></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                                        <div class="col-auto"><i class="fas fa-info fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +80,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Next Tour Location</span></div>
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span id="location">Next Tour Location</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span id="tourLocation">San Diego, California, USA</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-search-location fa-2x text-gray-300"></i></div>
@@ -97,7 +93,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Countdown to start</span></div>
+                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Countdown to EVENT start</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span id="countdown">Loading Countdown...</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
