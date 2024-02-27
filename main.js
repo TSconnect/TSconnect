@@ -546,8 +546,9 @@ function loadApp(){
       },{
         label: 'App Control', 
         submenu: [
-          {accelerator:"Alt+CommandOrControl+h", label: 'Home', click: function () { 
+          { accelerator:"Alt+CommandOrControl+h", label: 'Home', click: function () { 
             log.info("[SHORTCUT TRIGGERED] Navigating to Home")
+          } },
           {accelerator:"Alt+CommandOrControl+h", label: 'Home', click: function () { 
             log.info("[SHORTCUT TRIGGERED] Navigating to Home")
             menuManager("Home")
