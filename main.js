@@ -10,7 +10,6 @@ const {
 const { autoUpdater } = require('electron-updater');
 const Store = require('electron-store');
 const path = require('node:path')
-const DiscordRPC = require('discord-rpc-electron');
 const log = require('./logger');
 
 
@@ -24,29 +23,9 @@ const notifier = new Notify({
 })
 let readyForNotification = false;
 
-// Discord RPC Setup
-// Set this to your Client ID.
-const clientId = '1199765277903175790';
-
-// Only needed if you want to use spectate, join, or ask to join
-DiscordRPC.register(clientId);
-
-const rpc = new DiscordRPC.Client({ transport: 'ipc' });
-const startTimestamp = new Date();
 
 
 
-rpc.on('ready', () => {
-  log.info("[DISCORD RPC] Ready")
-
-  let status = ["You play stupid games, you win stupid prizes", "RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
-
-  let indet = "Browsing Dashboard";
-  let insta = status[Math.floor(Math.random() * status.length)];
-  setActivity(indet, insta)
-});
-
-rpc.login({ clientId }).catch(console.error);
 
 // start catching errors
 
@@ -159,23 +138,13 @@ setInterval(async () => {
 }, 10000)
 
 
-// Discord RPC Updates
 
 let det;
 let sta;
 
 
-ipcMain.on("sendRPC", (event, details, state) => {
-  det = details;
-  sta = state
-})
 
 
-setInterval(() => {
-  if(mainWindow != undefined){
-    setActivity(det, sta)
-  }
-}, 15000)
 
 
 
@@ -418,13 +387,13 @@ async function checkBackendUp(){
     return true
   }else{
     log.error("[QUITTING] Backend server is down.")
-    throwError("Backend Server Down", "Our backend server is currently down. Please check back later!")
+    throwError("Connection Failed", "Failed to connect to our backend server. Please try relaunching the application.")
     app.quit()
     return false
   }
   }catch(e) {
     log.error("[QUITTING] Backend server is down.")
-    throwError("Backend Server Down", "Our backend server is currently down. Please check back later!")
+    throwError("Connection Failed", "Failed to connect to our backend server. Please try relaunching the application.")
     app.quit()
     return false
   }
@@ -480,22 +449,6 @@ function sendStatusToWindow(text) {
   mainWindow.webContents.send('message', text);
 }
 
-async function setActivity(details, state) {
-  if (!rpc || !mainWindow) {
-    return;
-  }
-
-  // You'll need to have snek_large and snek_small assets uploaded to
-  // https://discord.com/developers/applications/<application_id>/rich-presence/assets
-  rpc.setActivity({
-    details: details,
-    state: state,
-    startTimestamp,
-    largeImageKey: 'icon_big',
-    largeImageText: 'TSConnect',
-    instance: false,
-  });
-}
 
 
 function checkForFirstRun(){
