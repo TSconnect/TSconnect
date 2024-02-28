@@ -13,6 +13,8 @@ const path = require('node:path')
 const DiscordRPC = require('discord-rpc-electron');
 const log = require('./logger');
 
+
+
 // define necessary variables
 let mainWindow;
 const store = new Store();

@@ -31,6 +31,9 @@
     "directories": {
       "output": "build"
     },
+    "extraFiles": [
+      "logs"
+    ],
     "productName": "TSConnect",
     "win": {
       "icon": "public/assets/img/icon.ico"
@@ -40,11 +43,11 @@
         "mas"
       ],
       "category": "public.app-category.utilities",
-      "bundleVersion": "24.0227.1",
+      "bundleVersion": "24.0228.1",
       "hardenedRuntime": true,
       "entitlements": "buildAssets/entitlements.mac.plist",
       "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
-      "provisioningProfile": "buildAssets/certs/TSConnect.provisionprofile",
+      "provisioningProfile": "buildAssets/certs/TSConnect_Test.provisionprofile",
       "gatekeeperAssess": false,
       "asarUnpack": [],
       "extendInfo": {
@@ -53,7 +56,7 @@
       }
     },
     "mas": {
-      "type": "distribution",
+      "type": "development",
       "entitlements": "buildAssets/entitlements.mas.plist",
       "entitlementsInherit": "buildAssets/entitlements.mas.inherit.plist",
       "entitlementsLoginHelper": "buildAssets/entitlements.mas.loginhelper.plist"
