@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog, ipcMain, Notification, pushNotifications } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
 const Notify = require('node-notifier').NotificationCenter;
 const appConfig = require("./config.json")
 const axios = require('axios');
@@ -10,9 +10,8 @@ const {
 const { autoUpdater } = require('electron-updater');
 const Store = require('electron-store');
 const path = require('node:path')
-const url = require('url');
-const log = require("electron-log");
 const DiscordRPC = require('discord-rpc-electron');
+const log = require('./logger');
 
 // define necessary variables
 let mainWindow;
@@ -49,102 +48,8 @@ rpc.login({ clientId }).catch(console.error);
 
 // start catching errors
 
-log.errorHandler.startCatching()
-
-function CheckForUpdate () {
 
 
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    title: 'TSConnect',
-    width: 300,
-    height: 500,
-    icon: __dirname + '/public/img/icon.png',
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-    }
-  })
-
-  if(process.platform != 'darwin') {
-    mainWindow.setMenu(null)
-  }
-
-  // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
-
-
-  autoUpdater.checkForUpdatesAndNotify();
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-  
-  
-}
-
-function createWindow () {
-  // If mainwindow somehow is undefined, create a new window and load the main index file
-  if(mainWindow == undefined){
-  // If mainwindow somehow is undefined, create a new window and load the main index file
-  if(mainWindow == undefined){
-  // Create the browser window.
-    mainWindow = new BrowserWindow({
-      title: 'TSConnect',
-      width: 950,
-      height: 700,
-      resizable: false,
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
-      }
-    })
-
-    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
-
-    // window exists, and is actually hidden, then show the window.
-  }else{
-    if(!mainWindow.isVisible()){
-      mainWindow.show();
-    }
-  }
-    mainWindow = new BrowserWindow({
-      title: 'TSConnect',
-      width: 950,
-      height: 700,
-      resizable: false,
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
-      }
-    })
-
-    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
-
-    // window exists, and is actually hidden, then show the window.
-  }else{
-    if(!mainWindow.isVisible()){
-      mainWindow.show();
-    }
-  }
-
-  if(process.platform != 'darwin') {
-    mainWindow.setMenu(null)
-  }
-
-  // Open the DevTools.
-  if(process.env.TSC_DEBUG == "true"){
-    mainWindow.webContents.openDevTools()
-  }
-
-
-  mainWindow.on('close', (e) => {
-    if (mainWindow.forceClose) return;
-    e.preventDefault();
-    mainWindow.hide();
-  });
-  
-}
 
 
 // set before quit
@@ -161,6 +66,7 @@ app.whenReady().then(async () => {
   log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
   log.info(`[PLATFORM] ${process.platform}`)
   log.info(`[CONFIG LOCATION] "${store.path}"`)
+  log.info(`[LOG LOCATION] ${log.transports.file.getFile()}`)
   checkBackendUp()
 
   if(checkForFirstRun()){
