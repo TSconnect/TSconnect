@@ -138,16 +138,6 @@ setInterval(async () => {
 }, 10000)
 
 
-
-let det;
-let sta;
-
-
-
-
-
-
-
 // IPC Main Processes
 
 ipcMain.on("checkBackendPing", async (event, details, state) => {

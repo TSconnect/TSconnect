@@ -16,11 +16,6 @@ window.onload = async () => {
   // set the document title, needed to execute specific actions
   var title = document.title;
 
-  // Discord RPC
-  let status = ["You play stupid games, you win stupid prizes", "RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
-
-
-
   // convert all to lowercase for safekeeping
   title = title.toLowerCase()
 
