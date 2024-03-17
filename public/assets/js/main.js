@@ -62,6 +62,11 @@ window.onload = async () => {
       if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "Awards Show"
       if(document.getElementById("location"))document.getElementById("location").innerText = "NEXT AWARDS SHOW LOCATION"
 
+    }else if(days.type == "musicrelease"){
+      if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEW MUSIC RELEASE TIME (YOUR TIME)"
+      if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "New Music"
+      if(document.getElementById("location"))document.getElementById("location").innerText = "Music Name"
+
     }
       // if the page needs nextTourDate
       let time = toTimestamp(days["startTime"]);
@@ -132,6 +137,10 @@ if (title == "action monitor"){
     if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next awards show will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
     if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Awards Show's Information"
 
+  }else if(days.type == "musicrelease"){
+    if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `New music will be released at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
+    if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Information"
+
   }
 
 
@@ -158,6 +167,8 @@ if (title == "action monitor"){
         text = `Live streams for the next event will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next event will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
       }else if(days.type == "awards"){
         text = `Live streams for the next awards show will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next awards show will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+      }else if(days.type == "musicrelease"){
+        text = `New music listening parties will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Listening parties will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
       }
       document.getElementById("livestreams").innerHTML = text
       return;
