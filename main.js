@@ -83,7 +83,6 @@ app.whenReady().then(async () => {
     }else{
       log.info(`[Version Check] Checking for Updates`)
       loadApp()
-      loadApp()
     }
     
   }
@@ -513,9 +512,10 @@ function createWindow () {
   // 
   
   mainWindow.on('close', (e) => {
-    if (mainWindow.forceClose) return;
-    e.preventDefault();
-    mainWindow.hide();
+    if(process.platform == 'darwin' && !mainWindow.forceClose){
+      e.preventDefault();
+      mainWindow.hide();
+    }
   });
   readyForNotification = true;
   
