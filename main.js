@@ -24,15 +24,6 @@ const notifier = new Notify({
 let readyForNotification = false;
 
 
-
-
-
-// start catching errors
-
-
-
-
-
 // set before quit
 app.on('before-quit', () => {
   mainWindow.forceClose = true;
@@ -44,7 +35,7 @@ app.on('before-quit', () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
   log.info(`[App Version] ${app.getVersion()}`)
-  log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
+  log.info(`[IS TESTING] ${process.env["TSC_TESTING"] == undefined ? false : process.env["TSC_TESTING"] }`)
   log.info(`[PLATFORM] ${process.platform}`)
   log.info(`[CONFIG LOCATION] "${store.path}"`)
   log.info(`[LOG LOCATION] ${log.transports.file.getFile()}`)

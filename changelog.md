@@ -1,3 +1,9 @@
+**v0.1.2**
+- Updated logging
+- Updated app to support windows
+- Bug fixes
+- Security updates
+
 **v0.1.1**
 - Updated About Us section by fixing grammar and adding new functionalities
 - Updated grammar issues around the app
