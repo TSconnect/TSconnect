@@ -2,6 +2,7 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
 const Notify = require('node-notifier').NotificationCenter;
 const appConfig = require("./config.json")
+const packageInfo = require("./info.json")
 const axios = require('axios');
 let clientKey;
 const { 
@@ -141,6 +142,11 @@ ipcMain.on("logConsole", (event, data) => {
 
 ipcMain.on("getConfig", (event) => {
   event.returnValue = require("./config.json")
+})
+
+
+ipcMain.on("getVersion", (event) => {
+  event.returnValue = `v${app.getVersion()}(${packageInfo.buildNumber})`
 })
 
 ipcMain.on("getTourDate", async (event) => {

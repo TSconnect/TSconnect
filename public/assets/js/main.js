@@ -15,9 +15,12 @@ window.onload = async () => {
   ipcRenderer.send("checkBackendPing")
   // set the document title, needed to execute specific actions
   var title = document.title;
+  var version = await getVersion();
 
   // convert all to lowercase for safekeeping
   title = title.toLowerCase()
+
+  document.getElementById("version").innerText = `Version ${version} | Copyright © TSConnect 2024`
 
   // if current page is dashboard
   if(title == "dashboard"){
@@ -257,6 +260,15 @@ async function getAnnouncements(){
 
   return ipcRenderer.sendSync("getAnnouncements");
 
+}
+
+/**
+ * Get the current app version.
+ * 
+ * @return {String} The current version string with build number in a parameter
+ */
+async function getVersion() {
+  return ipcRenderer.sendSync("getVersion")
 }
 
 
