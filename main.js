@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog, ipcMain, Notification, pushNotifications } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
 const Notify = require('node-notifier').NotificationCenter;
 const appConfig = require("./config.json")
 const axios = require('axios');
@@ -10,9 +10,9 @@ const {
 const { autoUpdater } = require('electron-updater');
 const Store = require('electron-store');
 const path = require('node:path')
-const url = require('url');
-const log = require("electron-log");
-const DiscordRPC = require('discord-rpc-electron');
+const log = require('./logger');
+
+
 
 // define necessary variables
 let mainWindow;
@@ -22,129 +22,6 @@ const notifier = new Notify({
   customPath: path.join(__dirname, "./node_modules/node-notifier/vendor/mac.noindex/TSConnect.app/Contents/MacOS/TSConnect")
 })
 let readyForNotification = false;
-
-// Discord RPC Setup
-// Set this to your Client ID.
-const clientId = '1199765277903175790';
-
-// Only needed if you want to use spectate, join, or ask to join
-DiscordRPC.register(clientId);
-
-const rpc = new DiscordRPC.Client({ transport: 'ipc' });
-const startTimestamp = new Date();
-
-
-
-rpc.on('ready', () => {
-  log.info("[DISCORD RPC] Ready")
-
-  let status = ["You play stupid games, you win stupid prizes", "RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
-
-  let indet = "Browsing Dashboard";
-  let insta = status[Math.floor(Math.random() * status.length)];
-  setActivity(indet, insta)
-});
-
-rpc.login({ clientId }).catch(console.error);
-
-// start catching errors
-
-log.errorHandler.startCatching()
-
-function CheckForUpdate () {
-
-
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    title: 'TSConnect',
-    width: 300,
-    height: 500,
-    icon: __dirname + '/public/img/icon.png',
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-    }
-  })
-
-  if(process.platform != 'darwin') {
-    mainWindow.setMenu(null)
-  }
-
-  // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/public/version.html#v${app.getVersion()}`);
-
-
-  autoUpdater.checkForUpdatesAndNotify();
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-  
-  
-}
-
-function createWindow () {
-  // If mainwindow somehow is undefined, create a new window and load the main index file
-  if(mainWindow == undefined){
-  // If mainwindow somehow is undefined, create a new window and load the main index file
-  if(mainWindow == undefined){
-  // Create the browser window.
-    mainWindow = new BrowserWindow({
-      title: 'TSConnect',
-      width: 950,
-      height: 700,
-      resizable: false,
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
-      }
-    })
-
-    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
-
-    // window exists, and is actually hidden, then show the window.
-  }else{
-    if(!mainWindow.isVisible()){
-      mainWindow.show();
-    }
-  }
-    mainWindow = new BrowserWindow({
-      title: 'TSConnect',
-      width: 950,
-      height: 700,
-      resizable: false,
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
-      }
-    })
-
-    mainWindow.loadURL(`file://${__dirname}/public/index.html`);
-
-    // window exists, and is actually hidden, then show the window.
-  }else{
-    if(!mainWindow.isVisible()){
-      mainWindow.show();
-    }
-  }
-
-  if(process.platform != 'darwin') {
-    mainWindow.setMenu(null)
-  }
-
-  // Open the DevTools.
-  if(process.env.TSC_DEBUG == "true"){
-    mainWindow.webContents.openDevTools()
-  }
-
-
-  mainWindow.on('close', (e) => {
-    if (mainWindow.forceClose) return;
-    e.preventDefault();
-    mainWindow.hide();
-  });
-  
-}
 
 
 // set before quit
@@ -158,9 +35,10 @@ app.on('before-quit', () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
   log.info(`[App Version] ${app.getVersion()}`)
-  log.info(`[IS TESTING] ${process.env["TSC_TESTING"]}`)
+  log.info(`[IS TESTING] ${process.env["TSC_TESTING"] == undefined ? false : process.env["TSC_TESTING"] }`)
   log.info(`[PLATFORM] ${process.platform}`)
   log.info(`[CONFIG LOCATION] "${store.path}"`)
+  log.info(`[LOG LOCATION] ${log.transports.file.getFile()}`)
   checkBackendUp()
 
   if(checkForFirstRun()){
@@ -195,7 +73,6 @@ app.whenReady().then(async () => {
       loadApp()
     }else{
       log.info(`[Version Check] Checking for Updates`)
-      loadApp()
       loadApp()
     }
     
@@ -249,26 +126,6 @@ setInterval(async () => {
 
   }
 }, 10000)
-
-
-// Discord RPC Updates
-
-let det;
-let sta;
-
-
-ipcMain.on("sendRPC", (event, details, state) => {
-  det = details;
-  sta = state
-})
-
-
-setInterval(() => {
-  if(mainWindow != undefined){
-    setActivity(det, sta)
-  }
-}, 15000)
-
 
 
 // IPC Main Processes
@@ -510,13 +367,13 @@ async function checkBackendUp(){
     return true
   }else{
     log.error("[QUITTING] Backend server is down.")
-    throwError("Backend Server Down", "Our backend server is currently down. Please check back later!")
+    throwError("Connection Failed", "Failed to connect to our backend server. Please try relaunching the application.")
     app.quit()
     return false
   }
   }catch(e) {
     log.error("[QUITTING] Backend server is down.")
-    throwError("Backend Server Down", "Our backend server is currently down. Please check back later!")
+    throwError("Connection Failed", "Failed to connect to our backend server. Please try relaunching the application.")
     app.quit()
     return false
   }
@@ -572,22 +429,6 @@ function sendStatusToWindow(text) {
   mainWindow.webContents.send('message', text);
 }
 
-async function setActivity(details, state) {
-  if (!rpc || !mainWindow) {
-    return;
-  }
-
-  // You'll need to have snek_large and snek_small assets uploaded to
-  // https://discord.com/developers/applications/<application_id>/rich-presence/assets
-  rpc.setActivity({
-    details: details,
-    state: state,
-    startTimestamp,
-    largeImageKey: 'icon_big',
-    largeImageText: 'TSConnect',
-    instance: false,
-  });
-}
 
 
 function checkForFirstRun(){
@@ -662,9 +503,10 @@ function createWindow () {
   // 
   
   mainWindow.on('close', (e) => {
-    if (mainWindow.forceClose) return;
-    e.preventDefault();
-    mainWindow.hide();
+    if(process.platform == 'darwin' && !mainWindow.forceClose){
+      e.preventDefault();
+      mainWindow.hide();
+    }
   });
   readyForNotification = true;
   

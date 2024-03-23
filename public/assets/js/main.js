@@ -16,12 +16,6 @@ window.onload = async () => {
   // set the document title, needed to execute specific actions
   var title = document.title;
 
-  // Discord RPC
-  let status = ["You play stupid games, you win stupid prizes", "RIP Me, I Died Dead", "You Could Lose Your Hand, You Could Lose Your Foot. You Could Lose Your Hand Getting It Off Your Foot! I Don’t Like Sea Urchins.","I'm a Doctor now so I know how breathing works", "I hate that stupid old pick-up truck you never let me drive."]
-
-  ipcRenderer.send("sendRPC", `Browsing ${title}`, status[Math.floor(Math.random() * status.length)])
-
-
   // convert all to lowercase for safekeeping
   title = title.toLowerCase()
 
@@ -67,6 +61,11 @@ window.onload = async () => {
       if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEXT AWARDS SHOW'S START TIME (YOUR TIME)"
       if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "Awards Show"
       if(document.getElementById("location"))document.getElementById("location").innerText = "NEXT AWARDS SHOW LOCATION"
+
+    }else if(days.type == "musicrelease"){
+      if(document.getElementById("localStartTime"))document.getElementById("localStartTime").innerText = "NEW MUSIC RELEASE TIME (YOUR TIME)"
+      if(document.getElementById("eventType"))document.getElementById("eventType").innerText = "New Music"
+      if(document.getElementById("location"))document.getElementById("location").innerText = "Music Name"
 
     }
       // if the page needs nextTourDate
@@ -138,6 +137,10 @@ if (title == "action monitor"){
     if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `The next awards show will start at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
     if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Next Awards Show's Information"
 
+  }else if(days.type == "musicrelease"){
+    if(document.getElementById("liveExplanation"))document.getElementById("liveExplanation").innerText = `New music will be released at ${time.toDateString()} ${time.toLocaleTimeString()} and will end at ${endTime.toDateString()} ${endTime.toLocaleTimeString()}`
+    if(document.getElementById("eventInfoTitle"))document.getElementById("eventInfoTitle").innerText = "Information"
+
   }
 
 
@@ -164,6 +167,8 @@ if (title == "action monitor"){
         text = `Live streams for the next event will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next event will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
       }else if(days.type == "awards"){
         text = `Live streams for the next awards show will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Live streams for the next awards show will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
+      }else if(days.type == "musicrelease"){
+        text = `New music listening parties will start appearing here at: ${tempTimeStart.toLocaleDateString()} ${tempTimeStart.toLocaleTimeString()}<br />Listening parties will disappear at: ${tempTimeEnd.toLocaleDateString()} ${tempTimeEnd.toLocaleTimeString()}`
       }
       document.getElementById("livestreams").innerHTML = text
       return;
