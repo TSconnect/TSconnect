@@ -1,3 +1,6 @@
+**v0.1.3**
+- Bring compatibility to intel macs!
+
 **v0.1.2**
 - Updated logging
 - Updated app to support windows
