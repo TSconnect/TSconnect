@@ -1,8 +1,11 @@
 {
-    "buildNumber": "24.0324.1",
+    "buildNumber": "24.0324.4",
     "version": "0.1.3",
-    "buildType": "dmg",
+    "buildType": "mas",
     "isDist": true,
+    "electronLanguages": [
+        "en"
+    ],
     "dependencies": {
         "@electron/notarize": "^2.2.0",
         "@electron/osx-sign": "^1.0.5",

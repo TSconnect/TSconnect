@@ -10,6 +10,7 @@ file["scripts"] = packageInfo["scripts"]
 // Set versions and build numbers
 file["version"] = packageInfo["version"]
 file["build"]["mac"]["bundleVersion"] = packageInfo["buildNumber"]
+file["build"]["electronLanguages"] = packageInfo["electronLanguages"]
 
 // If set build type is dmg, configure package.json to be publishing using dmg
 // If set build type is mas, configure package.json to be using mas

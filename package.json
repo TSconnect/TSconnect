@@ -42,14 +42,14 @@
         },
         "mac": {
             "target": [
-                "dmg",
-                "zip"
+                "mas"
             ],
             "category": "public.app-category.utilities",
-            "bundleVersion": "24.0324.1",
+            "bundleVersion": "24.0324.4",
             "hardenedRuntime": true,
             "entitlements": "buildAssets/entitlements.mac.plist",
             "entitlementsInherit": "buildAssets/entitlements.mac.inherit.plist",
+            "provisioningProfile": "buildAssets/certs/TSConnect.provisionprofile",
             "gatekeeperAssess": false,
             "asarUnpack": [],
             "extendInfo": {
@@ -83,7 +83,10 @@
                     "path": "/Applications"
                 }
             ]
-        }
+        },
+        "electronLanguages": [
+            "en"
+        ]
     },
     "dependencies": {
         "@electron/notarize": "^2.2.0",
