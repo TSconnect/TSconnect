@@ -4,7 +4,7 @@
     "description": "Your command center to everything Taylor Swift!",
     "main": "main.js",
     "scripts": {
-        "dist:windows": "electron-builder --win --publish always",
+        "dist:windows": "electron-builder --win",
         "start": "electron .",
         "test": "TSC_TESTING=true TSC_DEBUG=true electron .",
         "postinstall": "electron-builder install-app-deps",

@@ -25,7 +25,7 @@
         "tsconnect-notarize": "^1.0.6"
     },
     "scripts": {
-        "dist:windows": "electron-builder --win --publish always",
+        "dist:windows": "electron-builder --win",
         "start": "electron .",
         "test": "TSC_TESTING=true TSC_DEBUG=true electron .",
         "postinstall": "electron-builder install-app-deps",
