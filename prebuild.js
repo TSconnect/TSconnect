@@ -30,6 +30,10 @@ if(packageInfo["buildType"] == "dmg"){
         file["build"]["mac"]["provisioningProfile"] = "buildAssets/certs/TSConnect_Test.provisionprofile"
         file["build"]["mas"]["type"] = "development"
     }
+}else if(packageInfo["buildType"] == "win"){
+    file["build"]["win"]["target"] = [
+        "nsis"
+    ]
 }
 
 fs.writeFileSync(__dirname + "/package.json", JSON.stringify(file, null, 4))

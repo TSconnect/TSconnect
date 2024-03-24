@@ -8,7 +8,7 @@ info["version"] = version
 let buildNumber = prompt('Build Number:')
 info["buildNumber"] = buildNumber
 
-let type = prompt('Build Type(dmg or mas):')
+let type = prompt('Build Type(dmg or mas or win):')
 info["buildType"] = type
 
 let isDist = prompt('Is Distribution(y/n):')
