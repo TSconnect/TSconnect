@@ -4,6 +4,7 @@ const Notify = require('node-notifier').NotificationCenter;
 const appConfig = require("./config.json")
 const packageInfo = require("./info.json")
 const axios = require('axios');
+
 let clientKey;
 const { 
   v4: uuidv4,
@@ -27,6 +28,11 @@ let readyForNotification = false;
 
 // set before quit
 app.on('before-quit', () => {
+  if(mainWindow == undefined){
+    mainWindow = {
+      forceClose: false
+    }
+  }
   mainWindow.forceClose = true;
 });
 
@@ -103,7 +109,7 @@ app.on('window-all-closed', function () {
 
 setInterval(async () => {
   if(store.get("clientKey") != undefined && readyForNotification){
-    checkBackendUp()
+    try{
     let key = store.get("clientKey")
     checkRegistration(key)
     let config = {
@@ -124,6 +130,9 @@ setInterval(async () => {
         notified(key)
       }
     }
+  }catch(e){
+    checkBackendUp()
+  }
 
   }
 }, 10000)
@@ -357,6 +366,13 @@ async function checkRegistration(cKey){
 }
 
 async function checkBackendUp(){
+  let isOnline = !!await require('dns').promises.resolve('google.com').catch(()=>{});
+  if(isOnline == false){
+    log.error("[WIFI] Wifi Connection not Successful")
+    throwError("Wifi Down!", "Unable to establish wifi connection!")
+    app.quit()
+    return false
+  };
   
   let config = {
     method: "get",
