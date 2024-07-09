@@ -95,7 +95,7 @@
         "crypto": "^1.0.1",
         "electron-log": "^5.0.3",
         "electron-store": "^8.1.0",
-        "electron-updater": "^6.1.7",
+        "electron-updater": "^6.2.1",
         "macos-notification-state": "^3.0.0",
         "node-notifier": "^10.0.1",
         "prompt-sync": "^4.2.0",
